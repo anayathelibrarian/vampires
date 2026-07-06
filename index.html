@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Anaya's Vampire Movie Ranking</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700;900&family=Source+Sans+3:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #120808;
+    --bg-panel: #1a0e0e;
+    --bg-card: #21100f;
+    --rule: #3a1f1c;
+    --rule-bright: #5c2a25;
+    --blood: #8a1f24;
+    --blood-bright: #c43a3a;
+    --garlic: #d8c08a;
+    --slate: #5d7088;
+    --text: #ece3d8;
+    --text-dim: #b3a89c;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0; background:var(--bg); color:var(--text); font-family:'Source Sans 3', sans-serif; line-height:1.5;}
+  .wrap{max-width:1180px; margin:0 auto; padding:48px 32px 96px;}
+  h1,h2,h3{font-family:'Playfair Display', serif; font-weight:700; margin:0;}
+  h1{font-size:3rem; letter-spacing:0.5px;}
+  h2{font-size:1.7rem; color:var(--garlic); margin-bottom:6px;}
+  h3{font-size:1.05rem; color:var(--garlic); margin-bottom:18px;}
+  .eyebrow{text-transform:uppercase; letter-spacing:3px; font-size:0.72rem; color:var(--blood-bright); font-weight:600; margin-bottom:10px;}
+  .section{margin-top:84px;}
+  .section-intro{max-width:680px; color:var(--text-dim); margin-bottom:32px; font-size:0.97rem;}
+  header.hero{border-bottom:1px solid var(--rule); padding-bottom:40px; margin-bottom:40px;}
+  .subtitle{color:var(--text-dim); margin-top:10px; font-size:1.05rem; max-width:620px;}
+
+  .metrics{display:grid; grid-template-columns:repeat(4,1fr); gap:1px; background:var(--rule); border:1px solid var(--rule); margin-top:36px;}
+  .metric{background:var(--bg-panel); padding:22px 20px;}
+  .metric .num{font-family:'Playfair Display',serif; font-size:2.1rem; color:var(--garlic); line-height:1;}
+  .metric .label{font-size:0.78rem; color:var(--text-dim); text-transform:uppercase; letter-spacing:1.5px; margin-top:8px;}
+  .metric .sub{font-size:0.85rem; color:var(--text-dim); margin-top:4px;}
+
+  /* tooltip wrapper, works on any card */
+  .has-tooltip{position:relative;}
+  .tooltip-content{
+    position:absolute; bottom:calc(100% + 12px); left:50%; transform:translateX(-50%);
+    width:250px; background:var(--bg-card); border:1px solid var(--rule-bright);
+    padding:14px 16px; font-size:0.78rem; color:var(--text-dim); text-align:left;
+    opacity:0; visibility:hidden; transition:opacity 0.12s ease; z-index:80;
+    box-shadow:0 10px 28px rgba(0,0,0,0.5); pointer-events:none;
+  }
+  .has-tooltip:hover .tooltip-content{opacity:1; visibility:visible;}
+  .tooltip-content .tt-row{margin-bottom:8px;}
+  .tooltip-content .tt-row:last-child{margin-bottom:0;}
+  .tooltip-content .tt-head{font-family:'Playfair Display',serif; font-size:0.88rem; color:var(--garlic); padding-bottom:8px; border-bottom:1px solid var(--rule); margin-bottom:10px;}
+  .tooltip-content .tt-head strong{color:var(--garlic);}
+  .tooltip-content strong{color:var(--text); font-weight:600;}
+
+  /* poster placeholder cards */
+  .card, .card-mini{border:1px solid var(--rule-bright); background:var(--bg-card); border-radius:3px; overflow:hidden; cursor:default;}
+  .card{width:150px; flex-shrink:0;}
+  .card-mini{width:96px; flex-shrink:0;}
+  .card .art, .card-mini .art{aspect-ratio:2/3; display:flex; flex-direction:column; align-items:center; justify-content:center; padding:14px; text-align:center; position:relative;}
+  .poster-img{width:100%; height:100%; object-fit:cover; padding:0; position:absolute; inset:0;}
+  .card-mini .art{padding:8px;}
+  .card .art .fang{font-size:1.6rem; opacity:0.55; margin-bottom:8px;}
+  .card-mini .art .fang{font-size:1.1rem; opacity:0.5; margin-bottom:5px;}
+  .card .art .title{font-family:'Playfair Display',serif; font-weight:700; font-size:0.95rem; color:var(--text); line-height:1.2;}
+  .card-mini .art .title{font-family:'Playfair Display',serif; font-weight:700; font-size:0.72rem; color:var(--text); line-height:1.15;}
+  .card .art .year{font-size:0.78rem; color:rgba(236,227,216,0.7); margin-top:6px;}
+  .card-mini .art .year{font-size:0.64rem; color:rgba(236,227,216,0.65); margin-top:4px;}
+  .card .meta{padding:8px 10px; font-size:0.74rem; color:var(--text-dim); border-top:1px solid var(--rule); display:flex; justify-content:space-between;}
+  .genre-horror{background:linear-gradient(180deg, #3a1115, #1c0c0d);}
+  .genre-action{background:linear-gradient(180deg, #232c38, #14181f);}
+  .genre-comedy{background:linear-gradient(180deg, #4a3414, #221805);}
+  .genre-mix-ha{background:linear-gradient(180deg, #3a1115 0%, #3a1115 55%, #4a3414 55%, #4a3414 100%);}
+  .genre-mix-haa{background:linear-gradient(180deg, #3a1115 0%, #3a1115 55%, #232c38 55%, #232c38 100%);}
+  .genre-mix-ac{background:linear-gradient(180deg, #232c38 0%, #232c38 55%, #4a3414 55%, #4a3414 100%);}
+  .genre-romance{background:linear-gradient(180deg, #4a2050, #251028);}
+  .genre-drama{background:linear-gradient(180deg, #2a4a3a, #122418);}
+  .genre-mix-cr{background:linear-gradient(180deg, #4a3414 0%, #4a3414 55%, #4a2050 55%, #4a2050 100%);}
+  .genre-mix-cd{background:linear-gradient(180deg, #4a3414 0%, #4a3414 55%, #2a4a3a 55%, #2a4a3a 100%);}
+  .genre-mix-dh{background:linear-gradient(180deg, #2a4a3a 0%, #2a4a3a 55%, #3a1115 55%, #3a1115 100%);}
+  .genre-mix-hr{background:linear-gradient(180deg, #3a1115 0%, #3a1115 55%, #4a2050 55%, #4a2050 100%);}
+
+  .verdicts{display:flex; gap:48px; flex-wrap:wrap;}
+  .verdict-group{flex:1; min-width:320px;}
+  .verdict-group .vlabel{font-size:0.78rem; text-transform:uppercase; letter-spacing:2px; margin-bottom:16px; font-weight:600;}
+  .vlabel.best{color:#7fb88a;}
+  .vlabel.worst{color:var(--blood-bright);}
+  .card-row{display:flex; gap:14px; flex-wrap:wrap;}
+  .score-pill{display:inline-block; font-size:0.7rem; padding:2px 8px; border-radius:20px;}
+  .score-pill.pos{background:rgba(127,184,138,0.18); color:#9ed2a7;}
+  .score-pill.neg{background:rgba(196,58,58,0.18); color:#e08484;}
+
+  .chart-panel{background:var(--bg-panel); border:1px solid var(--rule); padding:28px; position:relative;}
+  .quad-labels{position:absolute; inset:28px; pointer-events:none; display:grid; grid-template-columns:1fr 1fr; grid-template-rows:1fr 1fr; font-size:0.72rem; text-transform:uppercase; letter-spacing:1.5px; color:rgba(236,227,216,0.4);}
+  .quad-labels span{padding:14px;}
+  .quad-labels .tl{text-align:left;}
+  .quad-labels .tr{text-align:right;}
+  .quad-labels .bl{text-align:left; align-self:end;}
+  .quad-labels .br{text-align:right; align-self:end;}
+
+  .swim-grid{display:grid; grid-template-columns:repeat(3,1fr); grid-auto-rows:auto; gap:0 20px;}
+  .swim-col-header{font-family:'Playfair Display',serif; font-size:1rem; color:var(--garlic); padding:12px 14px; background:var(--bg-panel); border:1px solid var(--rule); border-bottom:2px solid var(--rule-bright); text-align:center; letter-spacing:0.5px; margin-bottom:0;}
+  .swim-lane{border:1px solid var(--rule); border-top:none; padding:12px 10px 14px;}
+  .swim-lane:nth-child(3n+2), .swim-lane:nth-child(3n+3){border-top:none;}
+  .swim-lane.tone-pos{border-left:3px solid #4f7d58;}
+  .swim-lane.tone-warn{border-left:3px solid #9c6a26;}
+  .swim-lane.tone-neutral{border-left:3px solid #4a5566;}
+  .swim-lane.tone-neg{border-left:3px solid var(--blood);}
+  .swim-lane-empty{opacity:0.25; pointer-events:none;}
+  .lane-label{display:block; font-size:0.7rem; text-transform:uppercase; letter-spacing:1.5px; color:var(--text-dim); margin-bottom:10px;}
+  .lane-cards{display:flex; flex-wrap:wrap; gap:6px; min-height:24px;}
+  @media (max-width:800px){.swim-grid{grid-template-columns:1fr;}}
+  .ring{border:1.5px solid var(--rule-bright); border-radius:14px; padding:14px; display:flex; flex-wrap:wrap; gap:8px; align-items:flex-start;}
+  .ring .ring-label{font-size:0.72rem; text-transform:uppercase; letter-spacing:1px; color:var(--text-dim); width:100%; margin-bottom:4px;}
+  .ring.tone-pos{border-color:#4f7d58;}
+  .ring.tone-warn{border-color:#9c6a26;}
+  .ring.tone-neg{border-color:var(--blood);}
+  .ring.tone-neutral{border-color:#4a5566;}
+
+  .genre-flex{display:flex; gap:36px; flex-wrap:wrap; align-items:flex-start;}
+  .genre-chart-box{flex:1; min-width:340px;}
+  .genre-table{flex:1; min-width:340px; border-collapse:collapse; width:100%; font-size:0.88rem;}
+  .genre-table th, .genre-table td{padding:10px 8px; border-bottom:1px solid var(--rule); text-align:left;}
+  .genre-table th{color:var(--text-dim); font-weight:500; text-transform:uppercase; font-size:0.72rem; letter-spacing:1px;}
+  .swatch{display:inline-block; width:10px; height:10px; border-radius:2px; margin-right:8px;}
+
+  .timeline-wrap{overflow-x:auto; padding-bottom:16px;}
+  .timeline{position:relative; height:460px;}
+  .tl-axis{position:absolute; left:0; right:0; top:230px; height:1px; background:var(--rule-bright);}
+  .tl-dot{position:absolute; top:226px; width:9px; height:9px; border-radius:50%; background:var(--blood-bright); transform:translateX(-50%); z-index:2;}
+  .tl-connector{position:absolute; width:1px; background:var(--rule); z-index:1;}
+  .tl-card{position:absolute; transform:translateX(-50%); width:112px; text-align:center; z-index:3;}
+  .tl-card .ttitle{font-family:'Playfair Display',serif; font-size:0.74rem; line-height:1.15; color:var(--text);}
+  .tl-yearlabel{position:absolute; top:242px; transform:translateX(-50%); font-size:0.7rem; color:var(--text-dim);}
+
+  footer{margin-top:80px; padding-top:24px; border-top:1px solid var(--rule); color:var(--text-dim); font-size:0.8rem;}
+
+  @media (max-width: 720px){
+    .metrics{grid-template-columns:repeat(2,1fr);}
+    h1{font-size:2.1rem;}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="hero">
+    <div class="eyebrow">A field guide to my opinions</div>
+    <h1>Anaya's Vampire Movie Ranking</h1>
+    <p class="subtitle">Twenty films, one shared bloodline of monsters and metaphors &mdash; rated on enjoyment, quality, fright, and a few questions Letterboxd never asks. Hover any title or card for the full verdict.</p>
+    <div class="metrics">
+      <div class="metric">
+        <div class="num">2,079</div>
+        <div class="label">Minutes watched</div>
+        <div class="sub">about 34.7 hours, or 20 films back to back</div>
+      </div>
+      <div class="metric">
+        <div class="num">Wesley Snipes</div>
+        <div class="label">Most-seen actor</div>
+        <div class="sub">in 3 films &mdash; the entire Blade trilogy</div>
+      </div>
+      <div class="metric">
+        <div class="num">20 / 20</div>
+        <div class="label">Directors</div>
+        <div class="sub">no repeats &mdash; every film had a different director</div>
+      </div>
+      <div class="metric">
+        <div class="num">11</div>
+        <div class="label">Horror-tagged films</div>
+        <div class="sub">vs. 5 action, 4 comedy, 4 drama, 2 romance (genres can overlap)</div>
+      </div>
+    </div>
+  </header>
+
+  <section class="section">
+    <div class="eyebrow">The verdicts</div>
+    <h2>Best and least enjoyed</h2>
+    <div class="section-intro">By gut feeling alone &mdash; not quality, not fright, just whether it was a good time.</div>
+    <div class="verdicts">
+      <div class="verdict-group">
+        <div class="vlabel best">Most enjoyed</div>
+        <div class="card-row" id="enjoy-best"></div>
+      </div>
+      <div class="verdict-group">
+        <div class="vlabel worst">Least enjoyed</div>
+        <div class="card-row" id="enjoy-worst"></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="eyebrow">By the numbers</div>
+    <h2>Genre breakdown</h2>
+    <div class="section-intro">Some films wear two genres at once, so these counts add up to more than twenty. Drama is the newest addition — and lands highest of any genre on both enjoyment and quality.</div>
+    <div class="genre-flex">
+      <div class="genre-chart-box">
+        <div style="position:relative; width:100%; height:280px;">
+          <canvas id="genreChart" role="img" aria-label="Bar chart of film counts per genre tag">Horror appears in 11 films, action in 5, comedy in 4, drama in 4, romance in 2.</canvas>
+        </div>
+      </div>
+      <table class="genre-table">
+        <thead><tr><th>Genre</th><th>Films</th><th>Avg. enjoyment</th><th>Avg. quality</th></tr></thead>
+        <tbody>
+          <tr><td><span class="swatch" style="background:#3a6b3a;"></span>Drama</td><td>4</td><td>+3.5</td><td>+3.5</td></tr>
+          <tr><td><span class="swatch" style="background:#8563a8;"></span>Romance</td><td>2</td><td>+3.5</td><td>+3.0</td></tr>
+          <tr><td><span class="swatch" style="background:#8a1f24;"></span>Horror</td><td>11</td><td>+2.0</td><td>+2.3</td></tr>
+          <tr><td><span class="swatch" style="background:#b3852e;"></span>Comedy</td><td>4</td><td>+2.3</td><td>+1.8</td></tr>
+          <tr><td><span class="swatch" style="background:#3c4a5e;"></span>Action</td><td>5</td><td>&minus;0.2</td><td>&minus;2.2</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="eyebrow">The quadrant</div>
+    <h2>Enjoyment vs. quality</h2>
+    <div class="section-intro">Right means more fun, up means better made. Guilty pleasures are good times built badly; slogs are well made but joyless; hard passes earn neither label.</div>
+    <div class="chart-panel">
+      <div class="quad-labels">
+        <span class="tl">Respectable, but a slog</span>
+        <span class="tr">Genuinely great</span>
+        <span class="bl">Hard pass</span>
+        <span class="br">Guilty pleasure</span>
+      </div>
+      <div style="position:relative; width:100%; height:460px;">
+        <canvas id="quadChart" role="img" aria-label="Scatter chart of enjoyment versus quality for 11 vampire movies, divided into four labeled quadrants">Sinners and Nosferatu 2024 sit in the genuinely great quadrant. Blade and its sequels sit in the guilty pleasure quadrant. Renfield, Fright Night 1985, and Abraham Lincoln Vampire Hunter sit in the hard pass quadrant.</canvas>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="eyebrow">A second axis</div>
+    <h2>Scariness vs. aesthetic</h2>
+    <div class="section-intro">From a faint heebie-jeebie to full ahh! real monsters territory, plotted against how good each film actually looked.</div>
+    <div class="chart-panel">
+      <div style="position:relative; width:100%; height:460px;">
+        <canvas id="scaryAesChart" role="img" aria-label="Scatter chart of scariness versus aesthetic rating for all 11 vampire movies">Nosferatu 2024 is the only film rated anxiety on the scary scale and also has the top aesthetic score. Most other films cluster around not scary to heebie-jeebies.</canvas>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="eyebrow">The Lenses</div>
+    <h2>Vibe Check</h2>
+    <div class="section-intro">Every film's take on weirdness, feminism, and queerness. Hover a poster for the full verdict on that film.</div>
+    <div class="swim-grid">
+      <div class="swim-col-header" style="grid-column:1;">Queerness</div>
+      <div class="swim-col-header" style="grid-column:2;">Feminism</div>
+      <div class="swim-col-header" style="grid-column:3;">Weirdness</div>
+
+      <div class="swim-lane tone-pos" id="lane-queer-yes"><span class="lane-label">Queer</span><div class="lane-cards"></div></div>
+      <div class="swim-lane tone-pos" id="lane-fem-yes"><span class="lane-label">Feminist</span><div class="lane-cards"></div></div>
+      <div class="swim-lane tone-pos" id="lane-weird-strange"><span class="lane-label">Strange and unusual</span><div class="lane-cards"></div></div>
+
+      <div class="swim-lane tone-warn" id="lane-queer-maybe"><span class="lane-label">Sort of, maybe</span><div class="lane-cards"></div></div>
+      <div class="swim-lane tone-warn" id="lane-fem-maybe"><span class="lane-label">Sort of, maybe</span><div class="lane-cards"></div></div>
+      <div class="swim-lane tone-warn" id="lane-weird-quirky"><span class="lane-label">Quirky</span><div class="lane-cards"></div></div>
+
+      <div class="swim-lane tone-neutral" id="lane-queer-allo"><span class="lane-label">Allosexual</span><div class="lane-cards"></div></div>
+      <div class="swim-lane tone-neutral" id="lane-fem-no"><span class="lane-label">Not feminist</span><div class="lane-cards"></div></div>
+      <div class="swim-lane tone-neutral" id="lane-weird-normal"><span class="lane-label">Normal</span><div class="lane-cards"></div></div>
+
+      <div class="swim-lane tone-neg" id="lane-queer-homo"><span class="lane-label">Homophobic</span><div class="lane-cards"></div></div>
+      <div class="swim-lane tone-neg" id="lane-fem-misog"><span class="lane-label">Misogynist</span><div class="lane-cards"></div></div>
+      <div class="swim-lane tone-neg swim-lane-empty"><span class="lane-label">&nbsp;</span></div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="eyebrow">In order, to scale</div>
+    <h2>Release timeline</h2>
+    <div class="section-intro">Scroll for the full span.</div>
+    <div class="timeline-wrap">
+      <div class="timeline" id="timeline"></div>
+    </div>
+  </section>
+
+  <footer>Built from Anaya's vampire movie response sheet. Enjoyment, quality, and aesthetic scores range from &minus;5 to +5.</footer>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-datalabels/2.2.0/chartjs-plugin-datalabels.min.js"></script>
+<script>
+const films = [
+  {key:"sinners", poster:"sinners.jpg", t:"Sinners", y:2025, genre:["Horror"], enj:5, qual:5, aes:4,
+    monster:"Metaphor", scary:"Heebie-jeebies", sexy:"Average Human", queer:"Allosexual", feminist:"Feminist", weird:"Normal", kiss:4,
+    notes:"Phenomenal performances, soundtrack, and storytelling."},
+  {key:"vamps", poster:"vamps.jpg", t:"Vamps", y:2012, genre:["Comedy","Romance"], enj:5, qual:3, aes:0,
+    monster:"Monster", scary:"Not Scary", sexy:"Hot", queer:"Sort of, Maybe", feminist:"Feminist", weird:"Strange and unusual", kiss:5,
+    notes:"This movie was 100% fun. Passes the Bechdel test!"},
+  {key:"wwdits", poster:"wwdits.jpg", t:"What We Do in the Shadows", y:2014, genre:["Comedy"], enj:4, qual:4, aes:4,
+    monster:"Monster", scary:"Heebie-jeebies", sexy:"Average Human", queer:"Allosexual", feminist:"Sort of, Maybe", weird:"Strange and unusual", kiss:3,
+    notes:`There's a lot I really like about how the show went, but we do lose the werewolves entirely and I enjoy them very much. "We're werewolves not swear wolves" and "leave me alone to do my dark bidding on the internet" are two golden quotes.`},
+  {key:"lostboys", poster:"lostboys.jpg", t:"Lost Boys", y:1987, genre:["Horror"], enj:4, qual:4, aes:5,
+    monster:"Metaphor", scary:"Anxiety", sexy:"Hot", queer:"Allosexual", feminist:"Not feminist", weird:"Normal", kiss:5,
+    notes:"The dad from Gilmore Girls being the head vampire is a wild tone shift."},
+  {key:"nosferatu2024", poster:"nosferatu2024.jpg", t:"Nosferatu (2024)", y:2024, genre:["Horror"], enj:4, qual:5, aes:5,
+    monster:"Monster", scary:"Anxiety", sexy:"Grotesque", queer:"Queer", feminist:"Not feminist", weird:"Strange and unusual", kiss:1,
+    notes:"So gross! So good!"},
+  {key:"onlylovers", poster:"olla.jpg", t:"Only Lovers Left Alive", y:2013, genre:["Drama"], enj:4, qual:4, aes:5,
+    monster:"Metaphor", scary:"Heebie-jeebies", sexy:"Hot", queer:"Queer", feminist:"Feminist", weird:"Strange and unusual", kiss:5,
+    notes:"The joy in this film is in the details. It's quiet but glowing."},
+  {key:"humanist", poster:"hvscsp.jpg", t:"Humanist Vampire Seeking Consenting Suicidal Person", y:2023, genre:["Comedy","Drama"], enj:4, qual:3, aes:3,
+    monster:"Monster", scary:"Heebie-jeebies", sexy:"Average Human", queer:"Allosexual", feminist:"Feminist", weird:"Quirky", kiss:4,
+    notes:"The scariest part of this movie is the vampire dentist. Kidding! It's the idea of vampires still having problems parenting."},
+  {key:"girlwalks", poster:"agwhaan.jpg", t:"A Girl Walks Home Alone at Night", y:2014, genre:["Drama","Horror"], enj:4, qual:4, aes:4,
+    monster:"Metaphor", scary:"Heebie-jeebies", sexy:"Hot", queer:"Allosexual", feminist:"Feminist", weird:"Strange and unusual", kiss:5,
+    notes:"I think humans are the monster."},
+  {key:"bramstoker", poster:"bramstoker.jpg", t:"Bram Stoker's Dracula", y:1992, genre:["Horror"], enj:3, qual:3, aes:3,
+    monster:"Monster", scary:"Not Scary", sexy:"Only a mother could love", queer:"Sort of, Maybe", feminist:"Misogynist", weird:"Normal", kiss:2,
+    notes:"The novel had the vamps be about the fear of invaders... but we thankfully lose the racist aspect of that here, and play up the love story instead."},
+  {key:"shadowvampire", poster:"sotv.jpg", t:"Shadow of the Vampire", y:2000, genre:["Drama","Horror"], enj:2, qual:3, aes:3,
+    monster:"Monster", scary:"Anxiety", sexy:"Grotesque", queer:"Sort of, Maybe", feminist:"Misogynist", weird:"Quirky", kiss:1,
+    notes:"Based on a rumor about the filming of Nosferatu, Dafoe and Malkovich are both phenomenal but I have limited patience for films about men behaving badly."},
+  {key:"blade", poster:"blade.jpg", t:"Blade", y:1998, genre:["Action"], enj:2, qual:-1, aes:-1,
+    monster:"Monster", scary:"Not Scary", sexy:"Hot", queer:"Sort of, Maybe", feminist:"Misogynist", weird:"Quirky", kiss:1,
+    notes:`Blade is fat phobic. I hope I can find a gif of him at the end going "what the fuck". There's moments where it's aware of itself, and moments where it's fun, but Karen the doctor is a better protagonist than Blade is, who just seems to need therapy.`},
+  {key:"blade2", poster:"blade2.jpg", t:"Blade II", y:2002, genre:["Action"], enj:2, qual:-2, aes:0,
+    monster:"Monster", scary:"Not Scary", sexy:"Average Human", queer:"Allosexual", feminist:"Not feminist", weird:"Normal", kiss:2,
+    notes:"Hard to rate because there are normal vamps and super vamps, but eh."},
+  {key:"letright", poster:"ltron.jpg", t:"Let the Right One In", y:2008, genre:["Horror","Romance"], enj:2, qual:3, aes:1,
+    monster:"Monster", scary:"Anxiety", sexy:"Average Human", queer:"Allosexual", feminist:"Not feminist", weird:"Strange and unusual", kiss:1,
+    notes:`I think it was good but couldn't be a movie I enjoyed. There were several moments that made me go "yikes".`},
+  {key:"bladetrinity", poster:"bladetrinity.jpg", t:"Blade: Trinity", y:2004, genre:["Action"], enj:2, qual:-2, aes:0,
+    monster:"Monster", scary:"Heebie-jeebies", sexy:"Average Human", queer:"Homophobic", feminist:"Not feminist", weird:"Normal", kiss:4,
+    notes:"Parker Posey makes this movie. Ryan Reynolds' abs should get their own credit line."},
+  {key:"markoflilith", poster:"markoflilith.jpg", t:"Mark of Lilith", y:1986, genre:["Horror"], enj:1, qual:1, aes:0,
+    monster:"Metaphor", scary:"Anxiety", sexy:"Hot", queer:"Queer", feminist:"Feminist", weird:"Quirky", kiss:4,
+    notes:"As a college paper I think it's very successful — as a movie I think the story has holes and the acting is earnest but shaky. Cool ideas though!"},
+  {key:"frightnight2011", poster:"frightnight2011.jpg", t:"Fright Night (2011)", y:2011, genre:["Horror"], enj:1, qual:-1, aes:-3,
+    monster:"Monster", scary:"Heebie-jeebies", sexy:"Grotesque", queer:"Homophobic", feminist:"Misogynist", weird:"Normal", kiss:2,
+    notes:"Why is the vampire part shark? Bonus points for staking with a Century 21 lawn sign."},
+  {key:"nosferatu1922", poster:"nosferatu1922.jpg", t:"Nosferatu (1922)", y:1922, genre:["Horror"], enj:-2, qual:1, aes:2,
+    monster:"Metaphor", scary:"Heebie-jeebies", sexy:"Grotesque", queer:"Homophobic", feminist:"Not feminist", weird:"Quirky", kiss:2,
+    notes:"Curious history related to the clear Dracula knock-offs and what they chose to update for a German audience."},
+  {key:"frightnight1985", poster:"frightnight1985.jpg", t:"Fright Night (1985)", y:1985, genre:["Horror"], enj:-2, qual:-3, aes:-4,
+    monster:"Monster", scary:"Not Scary", sexy:"Only a mother could love", queer:"Sort of, Maybe", feminist:"Misogynist", weird:"Normal", kiss:1,
+    notes:"Why did he turn into green goo?"},
+  {key:"renfield", poster:"renfield.jpg", t:"Renfield", y:2023, genre:["Action","Comedy"], enj:-4, qual:-3, aes:1,
+    monster:"Monster", scary:"Not Scary", sexy:"Only a mother could love", queer:"Homophobic", feminist:"Not feminist", weird:"Normal", kiss:2,
+    notes:"Cage's Dracula is the only part of this monstrosity worth watching."},
+  {key:"abelincoln", poster:"abelincoln.jpg", t:"Abraham Lincoln: Vampire Hunter", y:2012, genre:["Action"], enj:-3, qual:-3, aes:-3,
+    monster:"Monster", scary:"Not Scary", sexy:"Only a mother could love", queer:"Homophobic", feminist:"Misogynist", weird:"Normal", kiss:1,
+    notes:"White savior revisionist history trash."}
+];
+const byKey = {};
+films.forEach(f => byKey[f.key] = f);
+
+function genreClass(genre){
+  const has = g => genre.includes(g);
+  if(has("Horror") && has("Action")) return "genre-mix-haa";
+  if(has("Horror") && has("Comedy")) return "genre-mix-ha";
+  if(has("Action") && has("Comedy")) return "genre-mix-ac";
+  if(has("Comedy") && has("Romance")) return "genre-mix-cr";
+  if(has("Comedy") && has("Drama")) return "genre-mix-cd";
+  if(has("Drama") && has("Horror")) return "genre-mix-dh";
+  if(has("Horror") && has("Romance")) return "genre-mix-hr";
+  if(has("Horror")) return "genre-horror";
+  if(has("Action")) return "genre-action";
+  if(has("Romance")) return "genre-romance";
+  if(has("Drama")) return "genre-drama";
+  return "genre-comedy";
+}
+
+const kissKillLabel = {1:"Kill it with fire", 2:"Stake it reluctantly", 3:"Keep your distance", 4:"Flirting never hurt anyone", 5:"Kiss it"};
+function tooltipHTML(f){
+  const rows = [];
+  rows.push(`<div class="tt-row tt-head"><strong>${f.t}</strong> (${f.y})</div>`);
+  if(f.notes) rows.push(`<div class="tt-row"><strong>Anaya's notes:</strong> ${f.notes}</div>`);
+  if(f.monster) rows.push(`<div class="tt-row"><strong>Monster or metaphor:</strong> ${f.monster}</div>`);
+  if(f.sexy) rows.push(`<div class="tt-row"><strong>How sexy are the vampires:</strong> ${f.sexy}</div>`);
+  if(f.kiss != null) rows.push(`<div class="tt-row"><strong>Kiss or kill:</strong> ${kissKillLabel[f.kiss] ?? f.kiss}</div>`);
+  if(rows.length === 1) rows.push(`<div class="tt-row">No comments or vibe ratings logged for this one.</div>`);
+  return rows.join("");
+}
+
+function cardHTML(key, opts){
+  opts = opts || {};
+  const f = byKey[key];
+  const mini = !!opts.mini;
+  const cardClass = mini ? "card-mini" : "card";
+  const gClass = genreClass(f.genre);
+  const metaRow = opts.metaLabel ? `<div class="meta"><span>${opts.metaLabel}</span><span class="score-pill ${opts.metaScore >= 0 ? 'pos' : 'neg'}">${opts.metaScore >= 0 ? '+' : '\u2212'}${Math.abs(opts.metaScore)}</span></div>` : "";
+  const artInner = f.poster
+    ? `<img src="${f.poster}" alt="${f.t} poster" class="poster-img" loading="lazy">`
+    : `<div class="fang">&#129415;</div><div class="title">${f.t}</div><div class="year">${f.y}</div>`;
+  return `<div class="has-tooltip">
+    <div class="${cardClass}">
+      <div class="art ${f.poster ? '' : gClass}">${artInner}</div>
+      ${metaRow}
+    </div>
+    <div class="tooltip-content">${tooltipHTML(f)}</div>
+  </div>`;
+}
+
+document.getElementById("enjoy-best").innerHTML =
+  cardHTML("sinners", {metaLabel:"Enjoyment", metaScore:5}) +
+  cardHTML("vamps", {metaLabel:"Enjoyment", metaScore:5}) +
+  cardHTML("wwdits", {metaLabel:"Enjoyment", metaScore:4}) +
+  cardHTML("lostboys", {metaLabel:"Enjoyment", metaScore:4}) +
+  cardHTML("nosferatu2024", {metaLabel:"Enjoyment", metaScore:4}) +
+  cardHTML("onlylovers", {metaLabel:"Enjoyment", metaScore:4}) +
+  cardHTML("humanist", {metaLabel:"Enjoyment", metaScore:4}) +
+  cardHTML("girlwalks", {metaLabel:"Enjoyment", metaScore:4});
+document.getElementById("enjoy-worst").innerHTML =
+  cardHTML("renfield", {metaLabel:"Enjoyment", metaScore:-4}) +
+  cardHTML("abelincoln", {metaLabel:"Enjoyment", metaScore:-3});
+
+function ringHTML(tone, label, keys){
+  return `<div class="ring ${tone}"><span class="ring-label">${label} (${keys.length})</span>${keys.map(k => cardHTML(k, {mini:true})).join("")}</div>`;
+}
+const queerLanes  = {"Queer":"lane-queer-yes", "Sort of, Maybe":"lane-queer-maybe", "Allosexual":"lane-queer-allo", "Homophobic":"lane-queer-homo"};
+const femLanes    = {"Feminist":"lane-fem-yes", "Sort of, Maybe":"lane-fem-maybe", "Not feminist":"lane-fem-no", "Misogynist":"lane-fem-misog"};
+const weirdLanes  = {"Strange and unusual":"lane-weird-strange", "Quirky":"lane-weird-quirky", "Normal":"lane-weird-normal"};
+
+films.forEach(f => {
+  if(f.queer && queerLanes[f.queer])
+    document.querySelector(`#${queerLanes[f.queer]} .lane-cards`).insertAdjacentHTML("beforeend", cardHTML(f.key, {mini:true}));
+  if(f.feminist && femLanes[f.feminist])
+    document.querySelector(`#${femLanes[f.feminist]} .lane-cards`).insertAdjacentHTML("beforeend", cardHTML(f.key, {mini:true}));
+  if(f.weird && weirdLanes[f.weird])
+    document.querySelector(`#${weirdLanes[f.weird]} .lane-cards`).insertAdjacentHTML("beforeend", cardHTML(f.key, {mini:true}));
+});
+
+const quadPlugin = {
+  id: 'quadBg',
+  beforeDraw(chart) {
+    const {ctx, chartArea, scales} = chart;
+    const x0 = scales.x.getPixelForValue(0);
+    const y0 = scales.y.getPixelForValue(0);
+    ctx.save();
+    ctx.fillStyle = 'rgba(127,184,138,0.07)';
+    ctx.fillRect(x0, chartArea.top, chartArea.right - x0, y0 - chartArea.top);
+    ctx.fillStyle = 'rgba(196,58,58,0.06)';
+    ctx.fillRect(chartArea.left, y0, x0 - chartArea.left, chartArea.bottom - y0);
+    ctx.fillStyle = 'rgba(93,112,136,0.10)';
+    ctx.fillRect(chartArea.left, chartArea.top, x0 - chartArea.left, y0 - chartArea.top);
+    ctx.fillStyle = 'rgba(216,192,138,0.08)';
+    ctx.fillRect(x0, y0, chartArea.right - x0, chartArea.bottom - y0);
+    ctx.strokeStyle = 'rgba(236,227,216,0.25)';
+    ctx.lineWidth = 1;
+    ctx.beginPath();
+    ctx.moveTo(x0, chartArea.top); ctx.lineTo(x0, chartArea.bottom);
+    ctx.moveTo(chartArea.left, y0); ctx.lineTo(chartArea.right, y0);
+    ctx.stroke();
+    ctx.restore();
+  }
+};
+Chart.register(ChartDataLabels);
+
+new Chart(document.getElementById('quadChart'), {
+  type: 'scatter',
+  data: { datasets: [{
+    data: films.map(f => ({x:f.enj, y:f.qual, label:f.t})),
+    backgroundColor: '#c43a3a', borderColor: '#ece3d8', borderWidth: 1,
+    pointRadius: 7, pointHoverRadius: 9
+  }]},
+  options: {
+    responsive: true, maintainAspectRatio: false, layout:{padding:20},
+    scales: {
+      x: { min:-6, max:6, title:{display:true, text:'Enjoyment', color:'#b3a89c'}, ticks:{color:'#b3a89c'}, grid:{color:'rgba(236,227,216,0.06)'} },
+      y: { min:-6, max:6, title:{display:true, text:'Quality', color:'#b3a89c'}, ticks:{color:'#b3a89c'}, grid:{color:'rgba(236,227,216,0.06)'} }
+    },
+    plugins: { legend:{display:false}, datalabels:{display:false}, tooltip:{ callbacks:{ label: (ctx) => `${ctx.raw.label}: enjoyment ${ctx.raw.x}, quality ${ctx.raw.y}` } } }
+  },
+  plugins: [quadPlugin]
+});
+
+const scaryMap = {"Not Scary":0, "Heebie-jeebies":1, "Anxiety":2, "Ahh! Real Monsters":3};
+const scaryTickLabel = {"0":"Not scary", "1":"Heebie-jeebies", "2":"Anxiety", "3":"Ahh! Real Monsters"};
+new Chart(document.getElementById('scaryAesChart'), {
+  type: 'scatter',
+  data: { datasets: [{
+    data: films.filter(f => f.scary).map(f => ({x:scaryMap[f.scary], y:f.aes, label:f.t})),
+    backgroundColor: '#c43a3a', borderColor: '#ece3d8', borderWidth: 1,
+    pointRadius: 7, pointHoverRadius: 9
+  }]},
+  options: {
+    responsive: true, maintainAspectRatio: false, layout:{padding:20},
+    scales: {
+      x: { min:-0.5, max:3.5, title:{display:true, text:'Scary level', color:'#b3a89c'},
+           afterBuildTicks: (axis) => { axis.ticks = [0,1,2,3].map(v => ({value:v})); },
+           ticks:{color:'#b3a89c', callback:(v) => scaryTickLabel[v] ?? ""},
+           grid:{color:'rgba(236,227,216,0.06)'} },
+      y: { min:-6, max:6, title:{display:true, text:'Aesthetic', color:'#b3a89c'}, ticks:{color:'#b3a89c'}, grid:{color:'rgba(236,227,216,0.06)'} }
+    },
+    plugins: {
+      legend:{display:false},
+      tooltip:{ callbacks:{ label: (ctx) => `${ctx.raw.label}: aesthetic ${ctx.raw.y}` } },
+      datalabels: { display:false }
+    }
+  }
+});
+
+const genreCounts = {Horror:0, Action:0, Comedy:0, Drama:0, Romance:0};
+films.forEach(f => f.genre.forEach(g => genreCounts[g]++));
+new Chart(document.getElementById('genreChart'), {
+  type: 'bar',
+  data: { labels: Object.keys(genreCounts), datasets: [{ data: Object.values(genreCounts), backgroundColor: ['#8a1f24','#3c4a5e','#b3852e','#3a6b3a','#8563a8'], borderRadius: 4 }]},
+  options: {
+    responsive: true, maintainAspectRatio: false,
+    scales: { x:{ticks:{color:'#b3a89c'}, grid:{display:false}}, y:{ticks:{color:'#b3a89c', stepSize:1}, grid:{color:'rgba(236,227,216,0.06)'}, beginAtZero:true} },
+    plugins: { legend:{display:false}, datalabels:{display:false} }
+  }
+});
+
+const tlContainer = document.getElementById('timeline');
+const sortedByYear = [...films].sort((a,b) => a.y - b.y);
+const minY = sortedByYear[0].y, maxY = sortedByYear[sortedByYear.length-1].y;
+const yearSpan = maxY - minY;
+const pxPerYear = 30;
+const sidePad = 80;
+const timelineWidth = Math.max(1100, yearSpan * pxPerYear + sidePad * 2);
+tlContainer.style.width = timelineWidth + "px";
+
+const axis = document.createElement('div');
+axis.className = 'tl-axis';
+tlContainer.appendChild(axis);
+
+const axisOffset = 230;
+const laneDists = [42, 96, 150, 200];
+const laneDefs = [];
+laneDists.forEach(d => { laneDefs.push({side:'top', dist:d}); laneDefs.push({side:'bottom', dist:d}); });
+const laneLastX = laneDefs.map(() => -Infinity);
+const minSep = 118;
+
+sortedByYear.forEach((f) => {
+  const xPct = yearSpan === 0 ? 0.5 : (f.y - minY) / yearSpan;
+  const x = sidePad + xPct * (timelineWidth - sidePad * 2);
+
+  let laneIdx = laneDefs.findIndex((_, i) => x - laneLastX[i] >= minSep);
+  if(laneIdx === -1){
+    laneIdx = laneLastX.indexOf(Math.min(...laneLastX));
+  }
+  laneLastX[laneIdx] = x;
+  const lane = laneDefs[laneIdx];
+
+  const dot = document.createElement('div');
+  dot.className = 'tl-dot';
+  dot.style.left = x + 'px';
+  tlContainer.appendChild(dot);
+
+  const yearLabel = document.createElement('div');
+  yearLabel.className = 'tl-yearlabel';
+  yearLabel.style.left = x + 'px';
+  yearLabel.textContent = f.y;
+  tlContainer.appendChild(yearLabel);
+
+  const connector = document.createElement('div');
+  connector.className = 'tl-connector';
+  connector.style.left = x + 'px';
+  if(lane.side === 'top'){
+    connector.style.top = (axisOffset - lane.dist + 4) + 'px';
+    connector.style.height = (lane.dist - 4) + 'px';
+  } else {
+    connector.style.top = (axisOffset) + 'px';
+    connector.style.height = (lane.dist - 4) + 'px';
+  }
+  tlContainer.appendChild(connector);
+
+  const cardWrap = document.createElement('div');
+  cardWrap.className = 'tl-card has-tooltip';
+  cardWrap.style.left = x + 'px';
+  if(lane.side === 'top'){
+    cardWrap.style.bottom = (axisOffset + lane.dist) + 'px';
+  } else {
+    cardWrap.style.top = (axisOffset + lane.dist) + 'px';
+  }
+  cardWrap.innerHTML = `<div class="ttitle">${f.t}</div><div class="tooltip-content">${tooltipHTML(f)}</div>`;
+  tlContainer.appendChild(cardWrap);
+});
+
+</script>
+</body>
+</html>
