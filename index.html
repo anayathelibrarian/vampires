@@ -138,6 +138,22 @@
   .tl-card .ttitle{font-family:'Playfair Display',serif; font-size:0.74rem; line-height:1.15; color:var(--text);}
   .tl-yearlabel{position:absolute; top:242px; transform:translateX(-50%); font-size:0.7rem; color:var(--text-dim);}
 
+  .rec-panel{background:var(--bg-panel); border:1px solid var(--rule); padding:28px; display:flex; flex-direction:column; gap:24px;}
+  .rec-row{display:flex; align-items:flex-start; gap:20px; flex-wrap:wrap;}
+  .rec-label{font-size:0.78rem; text-transform:uppercase; letter-spacing:1.5px; color:var(--text-dim); padding-top:8px; min-width:120px; flex-shrink:0;}
+  .rec-select{background:var(--bg-card); color:var(--text); border:1px solid var(--rule-bright); padding:8px 12px; font-family:'Source Sans 3',sans-serif; font-size:0.9rem; cursor:pointer; flex:1; min-width:240px;}
+  .rec-select:focus{outline:2px solid var(--garlic); outline-offset:2px;}
+  .rec-toggles{display:flex; flex-wrap:wrap; gap:8px;}
+  .rec-toggle{background:var(--bg-card); color:var(--text-dim); border:1px solid var(--rule-bright); padding:6px 14px; font-family:'Source Sans 3',sans-serif; font-size:0.82rem; cursor:pointer; transition:background 0.1s, color 0.1s, border-color 0.1s;}
+  .rec-toggle.active{background:rgba(216,192,138,0.12); color:var(--garlic); border-color:var(--garlic);}
+  .rec-toggle:focus{outline:2px solid var(--garlic); outline-offset:2px;}
+  .rec-results{display:flex; flex-direction:column; gap:12px;}
+  .rec-results-label{font-size:0.78rem; text-transform:uppercase; letter-spacing:1.5px; color:var(--text-dim);}
+  .rec-cards{display:flex; gap:16px; flex-wrap:wrap; align-items:flex-start;}
+  .rec-match{display:flex; flex-direction:column; gap:8px; width:150px;}
+  .rec-why{font-size:0.72rem; color:var(--text-dim); line-height:1.4;}
+  .rec-why strong{color:var(--garlic); font-weight:600; display:block; margin-bottom:2px;}
+
   footer{margin-top:80px; padding-top:24px; border-top:1px solid var(--rule); color:var(--text-dim); font-size:0.8rem;}
 
   @media (max-width: 720px){
@@ -151,7 +167,7 @@
 
   <header class="hero">
     <h1>Anaya's Vampire Movie Ranking</h1>
-    <p class="subtitle">Twenty-five films, one shared bloodline of monsters and metaphors &mdash; rated on enjoyment, quality, fright, and a few questions Letterboxd never asks. Hover any title or card for the full verdict.</p>
+    <p class="subtitle">Twenty-five films, one shared bloodline of monsters and metaphors &mdash; rated on enjoyment, quality, fright, and a few more things. Hover any title or card for the full verdict.</p>
     <div class="metrics">
       <div class="metric">
         <div class="num">2,559</div>
@@ -210,7 +226,7 @@
           <tr>
             <td><span class="swatch" style="background:#8563a8;"></span>Romance</td><td>2</td><td>+3.0</td><td>+2.5</td>
           </tr>
-          <tr><td colspan="4" class="genre-film-list">Vamps, Let the Right One In</td></tr>
+          <tr><td colspan="4" class="genre-film-list">Vamps, Let the Right One In*</td></tr>
           <tr>
             <td><span class="swatch" style="background:#8a1f24;"></span>Horror</td><td>13</td><td>+1.9</td><td>+2.1</td>
           </tr>
@@ -288,9 +304,44 @@
     </div>
   </section>
 
+  <section class="section">
+    <h2>What should YOU watch next?</h2>
+    <div class="section-intro">Enough about Anaya's opinions, now it's your turn. Pick a film you liked and what mattered to you about it. We'll find the closest matches from Anaya's opinions. </div>
+
+    <div class="rec-panel">
+      <div class="rec-row">
+        <label class="rec-label" for="rec-film">I liked</label>
+        <select id="rec-film" class="rec-select">
+          <option value="">— choose a film —</option>
+        </select>
+      </div>
+
+      <div class="rec-row">
+        <label class="rec-label">What mattered</label>
+        <div class="rec-toggles" id="rec-toggles">
+          <button class="rec-toggle active" data-dim="enj">Enjoyment</button>
+          <button class="rec-toggle active" data-dim="qual">Quality</button>
+          <button class="rec-toggle" data-dim="aes">Aesthetic</button>
+          <button class="rec-toggle" data-dim="scary">Scariness</button>
+          <button class="rec-toggle" data-dim="weird">Weirdness</button>
+          <button class="rec-toggle" data-dim="queer">Queerness</button>
+          <button class="rec-toggle" data-dim="feminist">Feminism</button>
+          <button class="rec-toggle" data-dim="sexy">Vampire sexiness</button>
+          <button class="rec-toggle" data-dim="monster">Monster or metaphor</button>
+        </div>
+      </div>
+
+      <div id="rec-results" class="rec-results" style="display:none;">
+        <div class="rec-results-label">Closest matches</div>
+        <div class="rec-cards" id="rec-cards"></div>
+      </div>
+    </div>
+    <div class="section-intro"><p>Consume media at your own risk. Anaya assumes no responsibility for lack-luster viewing experiences.</p></div>
+  </section>
+
   <footer>
   <p>Enjoyment, quality, and aesthetic scores range from &minus;5 to +5.</p>
-  <p style="margin-top:10px; color:var(--text-dim); font-size:0.78rem;">This presentation was built with the help of Claude (Anthropic). Data was collected via Google Forms and processed by Claude, which also generated the HTML, CSS, JavaScript, data visualizations, and layout from scratch based on Anaya's ratings and written notes — with ongoing iteration across many conversations.</p>
+  <p style="margin-top:10px; color:var(--text-dim); font-size:0.78rem;">This presentation was built with the help of Claude (Anthropic). Data was collected by Anaya Jones via Google Forms beginning in Spring 2026 and processed by Claude, which also generated the HTML, CSS, JavaScript, data visualizations, and layout from scratch based on Anaya's ratings and written notes — with ongoing iteration across many conversations.</p>
 </footer>
 </div>
 
@@ -608,6 +659,97 @@ sortedByYear.forEach((f) => {
   cardWrap.innerHTML = `<div class="ttitle">${f.t}</div><div class="tooltip-content">${tooltipHTML(f)}</div>`;
   tlContainer.appendChild(cardWrap);
 });
+// ── Recommender ────────────────────────────────────────────────────────────
+const scaryOrder  = {"Not Scary":0,"Heebie-jeebies":1,"Anxiety":2,"Ahh! Real Monsters":3,"Aaahh!!! Real Monsters":3};
+const weirdOrder  = {"Normal":0,"Quirky":1,"Strange and unusual":2,"Strange and Unusual":2,"Absolutely Wild":3};
+const queerOrder  = {"Homophobic":0,"Allosexual":1,"Sort of, Maybe":2,"Queer":3};
+const femOrder    = {"Misogynist":0,"Not feminist":1,"Sort of, Maybe":2,"Feminist":3};
+const sexyOrder   = {"Only a mother could love":0,"Average Human":1,"Grotesque":1,"Hot":2};
+const monsterOrder= {"Monster":0,"Metaphor":1};
+
+function dimScore(f, dim){
+  if(dim==="enj")     return f.enj;
+  if(dim==="qual")    return f.qual;
+  if(dim==="aes")     return f.aes;
+  if(dim==="scary")   return scaryOrder[f.scary] ?? null;
+  if(dim==="weird")   return weirdOrder[f.weird] ?? null;
+  if(dim==="queer")   return queerOrder[f.queer] ?? null;
+  if(dim==="feminist")return femOrder[f.feminist] ?? null;
+  if(dim==="sexy")    return sexyOrder[f.sexy] ?? null;
+  if(dim==="monster") return monsterOrder[f.monster] ?? null;
+  return null;
+}
+
+function dimLabel(dim){
+  return {enj:"enjoyment",qual:"quality",aes:"vibe quality",scary:"scariness",
+          weird:"weirdness",queer:"queerness",feminist:"feminism",
+          sexy:"vampire sexiness",monster:"monster vs. metaphor"}[dim] || dim;
+}
+
+// populate select
+const recSelect = document.getElementById("rec-film");
+[...films].sort((a,b)=>a.t.localeCompare(b.t)).forEach(f=>{
+  const opt = document.createElement("option");
+  opt.value = f.key;
+  opt.textContent = `${f.t} (${f.y})`;
+  recSelect.appendChild(opt);
+});
+
+// toggle buttons
+document.getElementById("rec-toggles").addEventListener("click", e=>{
+  const btn = e.target.closest(".rec-toggle");
+  if(!btn) return;
+  btn.classList.toggle("active");
+  runRecommender();
+});
+
+recSelect.addEventListener("change", runRecommender);
+
+function runRecommender(){
+  const key = recSelect.value;
+  const activeDims = [...document.querySelectorAll(".rec-toggle.active")].map(b=>b.dataset.dim);
+  const resultsEl = document.getElementById("rec-results");
+  const cardsEl = document.getElementById("rec-cards");
+
+  if(!key || activeDims.length===0){ resultsEl.style.display="none"; return; }
+
+  const source = byKey[key];
+  const sourceScores = {};
+  activeDims.forEach(d=>{ sourceScores[d] = dimScore(source, d); });
+
+  const candidates = films.filter(f=>f.key!==key).map(f=>{
+    let totalDist=0, usedDims=[], matchedDims=[];
+    activeDims.forEach(d=>{
+      const sv = sourceScores[d];
+      const fv = dimScore(f, d);
+      if(sv===null || fv===null) return;
+      const ranges = {enj:10,qual:10,aes:10,scary:3,weird:3,queer:3,feminist:3,sexy:2,monster:1};
+      const dist = Math.abs(sv-fv)/ranges[d];
+      totalDist += dist;
+      usedDims.push(d);
+      if(dist <= 0.2) matchedDims.push(d);
+    });
+    const score = usedDims.length ? totalDist/usedDims.length : Infinity;
+    return {f, score, matchedDims, usedDims};
+  }).filter(c=>c.usedDims.length>0);
+
+  candidates.sort((a,b)=>a.score-b.score);
+  const top = candidates.slice(0,4);
+
+  cardsEl.innerHTML = "";
+  top.forEach(({f, matchedDims, score})=>{
+    const whyText = matchedDims.length
+      ? matchedDims.map(dimLabel).join(", ")
+      : "closest overall match";
+    const div = document.createElement("div");
+    div.className = "rec-match";
+    div.innerHTML = `${cardHTML(f.key)}<div class="rec-why"><strong>Matched on</strong>${whyText}</div>`;
+    cardsEl.appendChild(div);
+  });
+
+  resultsEl.style.display = top.length ? "flex" : "none";
+  resultsEl.style.flexDirection = "column";
+}
 
 </script>
 </body>
