@@ -87,14 +87,14 @@
   .verdict-group{flex:1; min-width:320px;}
   .verdict-group .vlabel{font-size:0.78rem; text-transform:uppercase; letter-spacing:2px; margin-bottom:16px; font-weight:600;}
   .vlabel.best{color:#7fb88a;}
-  .vlabel.worst{color:var(--blood-bright);}
+  .vlabel.worst{color:#e55555;}
   .card-row{display:flex; gap:14px; flex-wrap:wrap;}
   .score-pill{display:inline-block; font-size:0.7rem; padding:2px 8px; border-radius:20px;}
   .score-pill.pos{background:rgba(127,184,138,0.18); color:#9ed2a7;}
   .score-pill.neg{background:rgba(196,58,58,0.18); color:#e08484;}
 
   .chart-panel{background:var(--bg-panel); border:1px solid var(--rule); padding:28px; position:relative;}
-  .quad-labels{position:absolute; inset:28px; pointer-events:none; display:grid; grid-template-columns:1fr 1fr; grid-template-rows:1fr 1fr; font-size:0.72rem; text-transform:uppercase; letter-spacing:1.5px; color:rgba(236,227,216,0.4);}
+  .quad-labels{position:absolute; inset:28px; pointer-events:none; display:grid; grid-template-columns:1fr 1fr; grid-template-rows:1fr 1fr; font-size:0.72rem; text-transform:uppercase; letter-spacing:1.5px; color:rgba(236,227,216,0.6);}
   .quad-labels span{padding:14px;}
   .quad-labels .tl{text-align:left;}
   .quad-labels .tr{text-align:right;}
@@ -108,7 +108,7 @@
   .swim-lane:nth-child(3n+2), .swim-lane:nth-child(3n+3){border-top:none;}
   .swim-lane.tone-pos{border-left:3px solid #4f7d58;}
   .swim-lane.tone-warn{border-left:3px solid #9c6a26;}
-  .swim-lane.tone-neutral{border-left:3px solid #4a5566;}
+  .swim-lane.tone-neutral{border-left:3px solid #677080;}
   .swim-lane.tone-neg{border-left:3px solid var(--blood);}
   .swim-lane-empty{opacity:0.25; pointer-events:none;}
   .lane-label{display:block; font-size:0.7rem; text-transform:uppercase; letter-spacing:1.5px; color:var(--text-dim); margin-bottom:10px;}
@@ -119,7 +119,7 @@
   .ring.tone-pos{border-color:#4f7d58;}
   .ring.tone-warn{border-color:#9c6a26;}
   .ring.tone-neg{border-color:var(--blood);}
-  .ring.tone-neutral{border-color:#4a5566;}
+  .ring.tone-neutral{border-color:#677080;}
 
   .genre-flex{display:flex; gap:36px; flex-wrap:wrap; align-items:flex-start;}
   .genre-chart-box{flex:1; min-width:340px;}
@@ -220,7 +220,7 @@
           </tr>
           <tr><td colspan="4" class="genre-film-list">Renfield, What We Do in the Shadows, Vamps, Humanist Vampire Seeking Consenting Suicidal Person, Jesus Christ Vampire Hunter, Dracula: Dead and Loving It, Buffy the Vampire Slayer</td></tr>
           <tr>
-            <td><span class="swatch" style="background:#3c4a5e;"></span>Action</td><td>7</td><td>+0.6</td><td>&minus;2.0</td>
+            <td><span class="swatch" style="background:#5a7090;"></span>Action</td><td>7</td><td>+0.6</td><td>&minus;2.0</td>
           </tr>
           <tr><td colspan="4" class="genre-film-list">Renfield, Blade, Blade II, Blade: Trinity, Abraham Lincoln: Vampire Hunter, Jesus Christ Vampire Hunter, Buffy the Vampire Slayer</td></tr>
         </tbody>
@@ -527,7 +527,7 @@ films.forEach(f => f.genre.forEach(g => {
 }));
 new Chart(document.getElementById('genreChart'), {
   type: 'bar',
-  data: { labels: Object.keys(genreCounts), datasets: [{ data: Object.values(genreCounts), backgroundColor: ['#8a1f24','#3c4a5e','#b3852e','#3a6b3a','#8563a8'], borderRadius: 4 }]},
+  data: { labels: Object.keys(genreCounts), datasets: [{ data: Object.values(genreCounts), backgroundColor: ['#8a1f24','#5a7090','#b3852e','#3a6b3a','#8563a8'], borderRadius: 4 }]},
   options: {
     responsive: true, maintainAspectRatio: false,
     scales: { x:{ticks:{color:'#b3a89c'}, grid:{display:false}}, y:{ticks:{color:'#b3a89c', stepSize:1}, grid:{color:'rgba(236,227,216,0.06)'}, beginAtZero:true} },
