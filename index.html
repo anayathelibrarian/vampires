@@ -151,12 +151,12 @@
 
   <header class="hero">
     <h1>Anaya's Vampire Movie Ranking</h1>
-    <p class="subtitle">Twenty-two films, one shared bloodline of monsters and metaphors &mdash; rated on enjoyment, quality, fright, and a few questions Letterboxd never asks. Hover any title or card for the full verdict.</p>
+    <p class="subtitle">Twenty-five films, one shared bloodline of monsters and metaphors &mdash; rated on enjoyment, quality, fright, and a few questions Letterboxd never asks. Hover any title or card for the full verdict.</p>
     <div class="metrics">
       <div class="metric">
-        <div class="num">2,261</div>
+        <div class="num">2,559</div>
         <div class="label">Minutes watched</div>
-        <div class="sub">about 37.7 hours, or 22 films back to back</div>
+        <div class="sub">about 42.7 hours, or 25 films back to back</div>
       </div>
       <div class="metric">
         <div class="num">Wesley Snipes</div>
@@ -164,14 +164,14 @@
         <div class="sub">in 3 films &mdash; the entire Blade trilogy</div>
       </div>
       <div class="metric">
-        <div class="num">22</div>
+        <div class="num">25</div>
         <div class="label">Directors</div>
         <div class="sub">every film had a different director</div>
       </div>
       <div class="metric">
-        <div class="num">11</div>
+        <div class="num">13</div>
         <div class="label">Horror-tagged films</div>
-        <div class="sub">vs. 6 action, 5 comedy, 4 drama, 2 romance (genres can overlap)</div>
+        <div class="sub">vs. 7 action, 7 comedy, 4 drama, 2 romance (genres can overlap)</div>
       </div>
     </div>
   </header>
@@ -193,11 +193,11 @@
 
   <section class="section">
     <h2>Genre breakdown</h2>
-    <div class="section-intro">Some films wear two genres at once, so these counts add up to more than twenty. Drama still lands highest of any genre on quality. Jesus Christ Vampire Hunter single-handedly makes Action's enjoyment look almost positive.</div>
+    <div class="section-intro">Some films wear two genres at once, so these counts add up to more than twenty-five. Drama still leads on quality; Action and Comedy are now neck and neck on film count, with very different results.</div>
     <div class="genre-flex">
       <div class="genre-chart-box">
         <div style="position:relative; width:100%; height:280px;">
-          <canvas id="genreChart" role="img" aria-label="Bar chart of film counts per genre tag">Horror appears in 12 films, action in 6, comedy in 5, drama in 4, romance in 2.</canvas>
+          <canvas id="genreChart" role="img" aria-label="Bar chart of film counts per genre tag">Horror appears in 13 films, action in 7, comedy in 7, drama in 4, romance in 2.</canvas>
         </div>
       </div>
       <table class="genre-table">
@@ -212,17 +212,17 @@
           </tr>
           <tr><td colspan="4" class="genre-film-list">Vamps, Let the Right One In</td></tr>
           <tr>
-            <td><span class="swatch" style="background:#8a1f24;"></span>Horror</td><td>12</td><td>+1.9</td><td>+2.0</td>
+            <td><span class="swatch" style="background:#8a1f24;"></span>Horror</td><td>13</td><td>+1.9</td><td>+2.1</td>
           </tr>
-          <tr><td colspan="4" class="genre-film-list">Sinners, Nosferatu (1922), Fright Night (2011), Bram Stoker's Dracula, Nosferatu (2024), Fright Night (1985), Lost Boys, Mark of Lilith, A Girl Walks Home Alone at Night, Shadow of the Vampire, Let the Right One In, The Hunger</td></tr>
+          <tr><td colspan="4" class="genre-film-list">Sinners, Nosferatu (1922), Fright Night (2011), Bram Stoker's Dracula, Nosferatu (2024), Fright Night (1985), Lost Boys, Mark of Lilith, A Girl Walks Home Alone at Night, Shadow of the Vampire, Let the Right One In, The Hunger, Interview with the Vampire</td></tr>
           <tr>
-            <td><span class="swatch" style="background:#b3852e;"></span>Comedy</td><td>5</td><td>+2.2</td><td>+0.8</td>
+            <td><span class="swatch" style="background:#b3852e;"></span>Comedy</td><td>7</td><td>+1.9</td><td>+0.6</td>
           </tr>
-          <tr><td colspan="4" class="genre-film-list">Renfield, What We Do in the Shadows, Vamps, Humanist Vampire Seeking Consenting Suicidal Person, Jesus Christ Vampire Hunter</td></tr>
+          <tr><td colspan="4" class="genre-film-list">Renfield, What We Do in the Shadows, Vamps, Humanist Vampire Seeking Consenting Suicidal Person, Jesus Christ Vampire Hunter, Dracula: Dead and Loving It, Buffy the Vampire Slayer</td></tr>
           <tr>
-            <td><span class="swatch" style="background:#3c4a5e;"></span>Action</td><td>6</td><td>+0.2</td><td>&minus;2.5</td>
+            <td><span class="swatch" style="background:#3c4a5e;"></span>Action</td><td>7</td><td>+0.6</td><td>&minus;2.0</td>
           </tr>
-          <tr><td colspan="4" class="genre-film-list">Renfield, Blade, Blade II, Blade: Trinity, Abraham Lincoln: Vampire Hunter, Jesus Christ Vampire Hunter</td></tr>
+          <tr><td colspan="4" class="genre-film-list">Renfield, Blade, Blade II, Blade: Trinity, Abraham Lincoln: Vampire Hunter, Jesus Christ Vampire Hunter, Buffy the Vampire Slayer</td></tr>
         </tbody>
       </table>
     </div>
@@ -363,7 +363,16 @@ const films = [
     notes:"My complaints: Mary Magnum finds and highlights a suspicious salt and pepper shaker set, and there's a bad but not funny bad musical number. Otherwise this movie is perfectly terrible and also amazing."},
   {key:"hunger", poster:"thehunger.jpg", t:"The Hunger", y:1983, genre:["Horror"], enj:3, qual:0, aes:5, rt:62, reviewed:"July 6, 2026",
     monster:"Metaphor", scary:"Ahh! Real Monsters", sexy:"Hot", queer:"Queer", feminist:"Feminist", weird:"Strange and unusual", kiss:5,
-    notes:"This movie is a lot. David Bowie spends a lot of time in old man make-up, and I think vampires as an allegory for addiction doesn't totally work — but locking your immortal but aged lovers in the attic is cold."}
+    notes:"This movie is a lot. David Bowie spends a lot of time in old man make-up, and I think vampires as an allegory for addiction doesn't totally work — but locking your immortal but aged lovers in the attic is cold."},
+  {key:"interviewvampire", poster:"", t:"Interview with the Vampire", y:1994, genre:["Horror"], enj:2, qual:3, aes:4, rt:66, reviewed:"July 7, 2026",
+    monster:"Metaphor", scary:"Heebie-jeebies", sexy:"Hot", queer:"Queer", feminist:"Not feminist", weird:"Quirky", kiss:2,
+    notes:"Louis is quite the whiner."},
+  {key:"ddali", poster:"ddali.jpg", t:"Dracula: Dead and Loving It", y:1995, genre:["Comedy"], enj:-1, qual:-1, aes:1, rt:11, reviewed:"July 8, 2026",
+    monster:"Monster", scary:"Not Scary", sexy:"Average Human", queer:"Allosexual", feminist:"Not feminist", weird:"Strange and unusual", kiss:4,
+    notes:"There were funny moments and tags I appreciated but many missed the mark and on the whole it was kinda eh."},
+  {key:"buffy", poster:"buffy.jpg", t:"Buffy the Vampire Slayer", y:1992, genre:["Action","Comedy"], enj:3, qual:1, aes:0, rt:36, reviewed:"July 8, 2026",
+    monster:"Monster", scary:"Not Scary", sexy:"Only a mother could love", queer:"Allosexual", feminist:"Feminist", weird:"Strange and unusual", kiss:2,
+    notes:"That was a lot of fun!"}
 ];
 const byKey = {};
 films.forEach(f => byKey[f.key] = f);
