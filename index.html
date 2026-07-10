@@ -167,12 +167,12 @@
 
   <header class="hero">
     <h1>Anaya's Vampire Movie Ranking</h1>
-    <p class="subtitle">Twenty-five films, one shared bloodline of monsters and metaphors &mdash; rated on enjoyment, quality, fright, and a few more things. Hover any title or card for the full verdict.</p>
+    <p class="subtitle"><span id="film-count-word">Twenty-five</span> films, one shared bloodline of monsters and metaphors &mdash; rated on enjoyment, quality, fright, and a few questions Letterboxd never asks. Hover any title or card for the full verdict.</p>
     <div class="metrics">
       <div class="metric">
-        <div class="num">2,559</div>
+        <div class="num" id="metric-minutes">—</div>
         <div class="label">Minutes watched</div>
-        <div class="sub">about 42.7 hours, or 25 films back to back</div>
+        <div class="sub" id="metric-minutes-sub">about 42.7 hours, or 25 films back to back</div>
       </div>
       <div class="metric">
         <div class="num">Wesley Snipes</div>
@@ -180,14 +180,14 @@
         <div class="sub">in 3 films &mdash; the entire Blade trilogy</div>
       </div>
       <div class="metric">
-        <div class="num">25</div>
+        <div class="num" id="metric-directors">25</div>
         <div class="label">Directors</div>
-        <div class="sub">every film had a different director</div>
+        <div class="sub" id="metric-directors-sub">every film had a different director</div>
       </div>
       <div class="metric">
-        <div class="num">13</div>
+        <div class="num" id="metric-horror">13</div>
         <div class="label">Horror-tagged films</div>
-        <div class="sub">vs. 7 action, 7 comedy, 4 drama, 2 romance (genres can overlap)</div>
+        <div class="sub" id="metric-genre-sub">vs. 7 action, 7 comedy, 4 drama, 2 romance (genres can overlap)</div>
       </div>
     </div>
   </header>
@@ -209,7 +209,7 @@
 
   <section class="section">
     <h2>Genre breakdown</h2>
-    <div class="section-intro">Some films wear two genres at once, so these counts add up to more than twenty-five. Drama still leads on quality; Action and Comedy are now neck and neck on film count, with very different results.</div>
+    <div class="section-intro">Some films wear two genres at once, so these counts add up to more than <span id="genre-intro-count">twenty-five</span>. Drama still leads on quality; Action and Comedy are now neck and neck on film count, with very different results.</div>
     <div class="genre-flex">
       <div class="genre-chart-box">
         <div style="position:relative; width:100%; height:280px;">
@@ -218,28 +218,7 @@
       </div>
       <table class="genre-table">
         <thead><tr><th>Genre</th><th>Films</th><th>Avg. enjoyment</th><th>Avg. quality</th></tr></thead>
-        <tbody>
-          <tr>
-            <td><span class="swatch" style="background:#3a6b3a;"></span>Drama</td><td>4</td><td>+3.0</td><td>+3.8</td>
-          </tr>
-          <tr><td colspan="4" class="genre-film-list">Only Lovers Left Alive, Humanist Vampire Seeking Consenting Suicidal Person, A Girl Walks Home Alone at Night, Shadow of the Vampire</td></tr>
-          <tr>
-            <td><span class="swatch" style="background:#8563a8;"></span>Romance</td><td>2</td><td>+3.0</td><td>+2.5</td>
-          </tr>
-          <tr><td colspan="4" class="genre-film-list">Vamps, Let the Right One In*</td></tr>
-          <tr>
-            <td><span class="swatch" style="background:#8a1f24;"></span>Horror</td><td>13</td><td>+1.9</td><td>+2.1</td>
-          </tr>
-          <tr><td colspan="4" class="genre-film-list">Sinners, Nosferatu (1922), Fright Night (2011), Bram Stoker's Dracula, Nosferatu (2024), Fright Night (1985), Lost Boys, Mark of Lilith, A Girl Walks Home Alone at Night, Shadow of the Vampire, Let the Right One In, The Hunger, Interview with the Vampire</td></tr>
-          <tr>
-            <td><span class="swatch" style="background:#b3852e;"></span>Comedy</td><td>7</td><td>+1.9</td><td>+0.6</td>
-          </tr>
-          <tr><td colspan="4" class="genre-film-list">Renfield, What We Do in the Shadows, Vamps, Humanist Vampire Seeking Consenting Suicidal Person, Jesus Christ Vampire Hunter, Dracula: Dead and Loving It, Buffy the Vampire Slayer</td></tr>
-          <tr>
-            <td><span class="swatch" style="background:#5a7090;"></span>Action</td><td>7</td><td>+0.6</td><td>&minus;2.0</td>
-          </tr>
-          <tr><td colspan="4" class="genre-film-list">Renfield, Blade, Blade II, Blade: Trinity, Abraham Lincoln: Vampire Hunter, Jesus Christ Vampire Hunter, Buffy the Vampire Slayer</td></tr>
-        </tbody>
+        <tbody id="genre-tbody"></tbody>
       </table>
     </div>
   </section>
@@ -305,8 +284,8 @@
   </section>
 
   <section class="section">
-    <h2>What should YOU watch next?</h2>
-    <div class="section-intro">Enough about Anaya, now it's your turn. Pick a film you liked and what mattered to you about it. We'll find the closest matches from the data on Anaya's opinions. </div>
+    <h2>What should I watch next?</h2>
+    <div class="section-intro">Pick a film you liked and what mattered to you about it. We'll find the closest matches from the list.</div>
 
     <div class="rec-panel">
       <div class="rec-row">
@@ -336,12 +315,11 @@
         <div class="rec-cards" id="rec-cards"></div>
       </div>
     </div>
-    <div class="section-intro"><p>Consume media at your own risk. Anaya assumes no responsibility for lack-luster viewing experiences.</p></div>
   </section>
 
   <footer>
   <p>Enjoyment, quality, and aesthetic scores range from &minus;5 to +5.</p>
-  <p style="margin-top:10px; color:var(--text-dim); font-size:0.78rem;">This presentation was built with the help of Claude (Anthropic). Data was collected by Anaya Jones via Google Forms beginning in Spring 2026 and processed by Claude, which also generated the HTML, CSS, JavaScript, data visualizations, and layout from scratch based on Anaya's ratings and written notes — with ongoing iteration across many conversations.</p>
+  <p style="margin-top:10px; color:var(--text-dim); font-size:0.78rem;">This presentation was built with the help of Claude (Anthropic). Data was collected via Google Forms and processed by Claude, which also generated the HTML, CSS, JavaScript, data visualizations, and layout from scratch based on Anaya's ratings and written notes — with ongoing iteration across many conversations.</p>
 </footer>
 </div>
 
@@ -349,52 +327,52 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-datalabels/2.2.0/chartjs-plugin-datalabels.min.js"></script>
 <script>
 const films = [
-  {key:"sinners", poster:"sinners.jpg", t:"Sinners", y:2025, genre:["Horror"], enj:5, qual:5, aes:4, rt:97, reviewed:"April 17, 2026",
+  {key:"sinners", poster:"sinners.jpg", t:"Sinners", y:2025, genre:["Horror"], enj:5, qual:5, aes:4, runtime:138, rt:97, reviewed:"April 17, 2026",
     monster:"Metaphor", scary:"Heebie-jeebies", sexy:"Average Human", queer:"Allosexual", feminist:"Sort of, Maybe", weird:"Quirky", kiss:4,
     notes:"Phenomenal performances, soundtrack, and storytelling."},
-  {key:"renfield", poster:"Renfield.jpg", t:"Renfield", y:2023, genre:["Action","Comedy"], enj:-4, qual:-3, aes:1, rt:57, reviewed:"April 17, 2026",
+  {key:"renfield", poster:"Renfield.jpg", t:"Renfield", y:2023, genre:["Action","Comedy"], enj:-4, qual:-3, aes:1, runtime:93, rt:57, reviewed:"April 17, 2026",
     monster:"Monster", scary:"Not Scary", sexy:"Only a mother could love", queer:"Homophobic", feminist:"Not feminist", weird:"Normal", kiss:2,
     notes:"Cage's Dracula is the only part of this monstrosity worth watching."},
-  {key:"blade", poster:"blade.jpg", t:"Blade", y:1998, genre:["Action"], enj:2, qual:-1, aes:-1, rt:54, reviewed:"April 26, 2026",
+  {key:"blade", poster:"blade.jpg", t:"Blade", y:1998, genre:["Action"], enj:2, qual:-1, aes:-1, runtime:120, rt:54, reviewed:"April 26, 2026",
     monster:"Monster", scary:"Not Scary", sexy:"Hot", queer:"Sort of, Maybe", feminist:"Misogynist", weird:"Quirky", kiss:1,
     notes:`Blade is fat phobic. I hope I can find a gif of him at the end going "what the fuck". There's moments where it's aware of itself, and moments where it's fun, but Karen the doctor is a better protagonist than Blade is, who just seems to need therapy.`},
-  {key:"blade2", poster:"blade2.jpg", t:"Blade II", y:2002, genre:["Action"], enj:1, qual:-2, aes:0, rt:57, reviewed:"April 26, 2026",
+  {key:"blade2", poster:"blade2.jpg", t:"Blade II", y:2002, genre:["Action"], enj:1, qual:-2, aes:0, runtime:117, rt:57, reviewed:"April 26, 2026",
     monster:"Monster", scary:"Not Scary", sexy:"Average Human", queer:"Allosexual", feminist:"Not feminist", weird:"Normal", kiss:2,
     notes:"Hard to rate because there are normal vamps and super vamps, but eh."},
-  {key:"bladetrinity", poster:"bladetrinity.jpg", t:"Blade: Trinity", y:2004, genre:["Action"], enj:1, qual:-3, aes:0, rt:24, reviewed:"April 27, 2026",
+  {key:"bladetrinity", poster:"bladetrinity.jpg", t:"Blade: Trinity", y:2004, genre:["Action"], enj:1, qual:-3, aes:0, runtime:113, rt:24, reviewed:"April 27, 2026",
     monster:"Monster", scary:"Heebie-jeebies", sexy:"Average Human", queer:"Homophobic", feminist:"Not feminist", weird:"Normal", kiss:4,
     notes:"Parker Posey makes this movie. Ryan Reynolds' abs should get their own credit line."},
-  {key:"nosferatu1922", poster:"nosferatu1922.jpg", t:"Nosferatu (1922)", y:1922, genre:["Horror"], enj:-2, qual:2, aes:2, rt:97, reviewed:"April 28, 2026",
+  {key:"nosferatu1922", poster:"nosferatu1922.jpg", t:"Nosferatu (1922)", y:1922, genre:["Horror"], enj:-2, qual:2, aes:2, runtime:94, rt:97, reviewed:"April 28, 2026",
     monster:"Metaphor", scary:"Heebie-jeebies", sexy:"Grotesque", queer:"Homophobic", feminist:"Not feminist", weird:"Quirky", kiss:2,
     notes:"Curious history related to the clear Dracula knock-offs and what they chose to update for a German audience."},
-  {key:"frightnight2011", poster:"frightnight2011.jpg", t:"Fright Night (2011)", y:2011, genre:["Horror"], enj:1, qual:-1, aes:-3, rt:72, reviewed:"May 4, 2026",
+  {key:"frightnight2011", poster:"frightnight2011.jpg", t:"Fright Night (2011)", y:2011, genre:["Horror"], enj:1, qual:-1, aes:-3, runtime:106, rt:72, reviewed:"May 4, 2026",
     monster:"Monster", scary:"Heebie-jeebies", sexy:"Grotesque", queer:"Homophobic", feminist:"Misogynist", weird:"Normal", kiss:2,
     notes:"Why is the vampire part shark? Bonus points for staking with a Century 21 lawn sign."},
-  {key:"bramstoker", poster:"bramstoker.jpg", t:"Bram Stoker's Dracula", y:1992, genre:["Horror"], enj:3, qual:3, aes:3, rt:72, reviewed:"May 4, 2026",
+  {key:"bramstoker", poster:"bramstoker.jpg", t:"Bram Stoker's Dracula", y:1992, genre:["Horror"], enj:3, qual:3, aes:3, runtime:128, rt:72, reviewed:"May 4, 2026",
     monster:"Monster", scary:"Not Scary", sexy:"Only a mother could love", queer:"Sort of, Maybe", feminist:"Misogynist", weird:"Normal", kiss:2,
     notes:"The novel had the vamps be about the fear of invaders... but we thankfully lose the racist aspect of that here, and play up the love story instead."},
-  {key:"nosferatu2024", poster:"nosferatu2024.jpg", t:"Nosferatu (2024)", y:2024, genre:["Horror"], enj:4, qual:4, aes:5, rt:87, reviewed:"May 6, 2026",
+  {key:"nosferatu2024", poster:"nosferatu2024.jpg", t:"Nosferatu (2024)", y:2024, genre:["Horror"], enj:4, qual:4, aes:5, runtime:132, rt:87, reviewed:"May 6, 2026",
     monster:"Monster", scary:"Anxiety", sexy:"Grotesque", queer:"Queer", feminist:"Not feminist", weird:"Strange and unusual", kiss:1,
     notes:"So gross! So good!"},
-  {key:"frightnight1985", poster:"frightnight1985.jpg", t:"Fright Night (1985)", y:1985, genre:["Horror"], enj:-2, qual:-3, aes:-4, rt:79, reviewed:"May 14, 2026",
+  {key:"frightnight1985", poster:"frightnight1985.jpg", t:"Fright Night (1985)", y:1985, genre:["Horror"], enj:-2, qual:-3, aes:-4, runtime:107, rt:79, reviewed:"May 14, 2026",
     monster:"Monster", scary:"Not Scary", sexy:"Only a mother could love", queer:"Sort of, Maybe", feminist:"Misogynist", weird:"Normal", kiss:1,
     notes:"Why did he turn into green goo?"},
-  {key:"abelincoln", poster:"abelincoln.jpg", t:"Abraham Lincoln: Vampire Hunter", y:2012, genre:["Action"], enj:-3, qual:-3, aes:-3, rt:34, reviewed:"May 23, 2026",
+  {key:"abelincoln", poster:"abelincoln.jpg", t:"Abraham Lincoln: Vampire Hunter", y:2012, genre:["Action"], enj:-3, qual:-3, aes:-3, runtime:105, rt:34, reviewed:"May 23, 2026",
     monster:"Monster", scary:"Not Scary", sexy:"Only a mother could love", queer:"Homophobic", feminist:"Misogynist", weird:"Normal", kiss:1,
     notes:"White savior revisionist history trash."},
-  {key:"wwdits", poster:"wwdits.jpg", t:"What We Do in the Shadows", y:2014, genre:["Comedy"], enj:4, qual:4, aes:4, rt:96, reviewed:"June 30, 2026",
+  {key:"wwdits", poster:"wwdits.jpg", t:"What We Do in the Shadows", y:2014, genre:["Comedy"], enj:4, qual:4, aes:4, runtime:86, rt:96, reviewed:"June 30, 2026",
     monster:"Monster", scary:"Heebie-jeebies", sexy:"Average Human", queer:"Allosexual", feminist:"Sort of, Maybe", weird:"Strange and unusual", kiss:3,
     notes:`There's a lot I really like about how the show went, but we do lose the werewolves entirely and I enjoy them very much. "We're werewolves not swear wolves" and "leave me alone to do my dark bidding on the internet" are two golden quotes.`},
-  {key:"lostboys", poster:"lostboys.jpg", t:"Lost Boys", y:1987, genre:["Horror"], enj:3, qual:3, aes:3, rt:75, reviewed:"June 30, 2026",
+  {key:"lostboys", poster:"lostboys.jpg", t:"Lost Boys", y:1987, genre:["Horror"], enj:3, qual:3, aes:3, runtime:97, rt:75, reviewed:"June 30, 2026",
     monster:"Metaphor", scary:"Anxiety", sexy:"Hot", queer:"Allosexual", feminist:"Not feminist", weird:"Normal", kiss:5,
     notes:"The dad from Gilmore Girls being the head vampire is a wild tone shift."},
-  {key:"vamps", poster:"vamps.jpg", t:"Vamps", y:2012, genre:["Comedy","Romance"], enj:4, qual:2, aes:0, rt:58, reviewed:"June 30, 2026",
+  {key:"vamps", poster:"vamps.jpg", t:"Vamps", y:2012, genre:["Comedy","Romance"], enj:4, qual:2, aes:0, runtime:84, rt:58, reviewed:"June 30, 2026",
     monster:"Monster", scary:"Not Scary", sexy:"Hot", queer:"Sort of, Maybe", feminist:"Feminist", weird:"Quirky", kiss:5,
     notes:"This movie was 100% fun. Passes the Bechdel test!"},
-  {key:"onlylovers", poster:"olla.jpg", t:"Only Lovers Left Alive", y:2013, genre:["Drama"], enj:4, qual:4, aes:5, rt:86, reviewed:"July 1, 2026",
+  {key:"onlylovers", poster:"olla.jpg", t:"Only Lovers Left Alive", y:2013, genre:["Drama"], enj:4, qual:4, aes:5, runtime:123, rt:86, reviewed:"July 1, 2026",
     monster:"Metaphor", scary:"Heebie-jeebies", sexy:"Hot", queer:"Queer", feminist:"Feminist", weird:"Strange and unusual", kiss:5,
     notes:"The joy in this film is in the details. It's quiet but glowing."},
-  {key:"humanist", poster:"hvscsp.jpg", t:"Humanist Vampire Seeking Consenting Suicidal Person", y:2023, genre:["Comedy","Drama"], enj:3, qual:4, aes:2, rt:90, reviewed:"July 1, 2026",
+  {key:"humanist", poster:"hvscsp.jpg", t:"Humanist Vampire Seeking Consenting Suicidal Person", y:2023, genre:["Comedy","Drama"], enj:3, qual:4, aes:2, runtime:92, rt:90, reviewed:"July 1, 2026",
     monster:"Monster", scary:"Heebie-jeebies", sexy:"Average Human", queer:"Allosexual", feminist:"Sort of, Maybe", weird:"Quirky", kiss:4,
     notes:"The scariest part of this movie is the vampire dentist. Kidding! It's the idea of vampires still having problems parenting."},
   {key:"girlwalks", poster:"agwhaan.jpg", t:"A Girl Walks Home Alone at Night", y:2014, genre:["Drama","Horror"], enj:3, qual:4, aes:4, rt:99, reviewed:"July 1, 2026",
@@ -403,33 +381,99 @@ const films = [
   {key:"shadowvampire", poster:"sotv.jpg", t:"Shadow of the Vampire", y:2000, genre:["Drama","Horror"], enj:2, qual:3, aes:3, rt:82, reviewed:"July 2, 2026",
     monster:"Monster", scary:"Anxiety", sexy:"Grotesque", queer:"Sort of, Maybe", feminist:"Misogynist", weird:"Quirky", kiss:1,
     notes:"Based on a rumor about the filming of Nosferatu, Dafoe and Malkovich are both phenomenal but I have limited patience for films about men behaving badly."},
-  {key:"markoflilith", poster:"markoflilith.jpg", t:"Mark of Lilith", y:1986, genre:["Horror"], enj:1, qual:1, aes:0, rt:null, reviewed:"July 5, 2026",
+  {key:"markoflilith", poster:"markoflilith.jpg", t:"Mark of Lilith", y:1986, genre:["Horror"], enj:1, qual:1, aes:0, runtime:32, rt:null, reviewed:"July 5, 2026",
     monster:"Metaphor", scary:"Anxiety", sexy:"Hot", queer:"Queer", feminist:"Feminist", weird:"Quirky", kiss:4,
     notes:"As a college paper I think it's very successful — as a movie I think the story has holes and the acting is earnest but shaky. Cool ideas though!"},
-  {key:"letright", poster:"ltron.jpg", t:"Let the Right One In", y:2008, genre:["Horror","Romance"], enj:2, qual:3, aes:1, rt:98, reviewed:"July 5, 2026",
+  {key:"letright", poster:"ltron.jpg", t:"Let the Right One In", y:2008, genre:["Horror","Romance"], enj:2, qual:3, aes:1, runtime:114, rt:98, reviewed:"July 5, 2026",
     monster:"Monster", scary:"Anxiety", sexy:"Average Human", queer:"Allosexual", feminist:"Not feminist", weird:"Strange and unusual", kiss:1,
     notes:`I think it was good but couldn't be a movie I enjoyed. There were several moments that made me go "yikes".`},
-  {key:"jcvh", poster:"JCVH.jpg", t:"Jesus Christ Vampire Hunter", y:2001, genre:["Action","Comedy"], enj:4, qual:-3, aes:-3, rt:null, reviewed:"July 6, 2026",
+  {key:"jcvh", poster:"JCVH.jpg", t:"Jesus Christ Vampire Hunter", y:2001, genre:["Action","Comedy"], enj:4, qual:-3, aes:-3, runtime:85, rt:null, reviewed:"July 6, 2026",
     monster:"Monster", scary:"Not Scary", sexy:"Hot", queer:"Queer", feminist:"Misogynist", weird:"Absolutely Wild", kiss:5,
     notes:"My complaints: Mary Magnum finds and highlights a suspicious salt and pepper shaker set, and there's a bad but not funny bad musical number. Otherwise this movie is perfectly terrible and also amazing."},
   {key:"hunger", poster:"thehunger.jpg", t:"The Hunger", y:1983, genre:["Horror"], enj:3, qual:0, aes:5, rt:62, reviewed:"July 6, 2026",
     monster:"Metaphor", scary:"Ahh! Real Monsters", sexy:"Hot", queer:"Queer", feminist:"Feminist", weird:"Strange and unusual", kiss:5,
     notes:"This movie is a lot. David Bowie spends a lot of time in old man make-up, and I think vampires as an allegory for addiction doesn't totally work — but locking your immortal but aged lovers in the attic is cold."},
-  {key:"interviewvampire", poster:"iwtv.jpg", t:"Interview with the Vampire", y:1994, genre:["Horror"], enj:2, qual:3, aes:4, rt:66, reviewed:"July 7, 2026",
+  {key:"interviewvampire", poster:"", t:"Interview with the Vampire", y:1994, genre:["Horror"], enj:2, qual:3, aes:4, runtime:122, rt:66, reviewed:"July 7, 2026",
     monster:"Metaphor", scary:"Heebie-jeebies", sexy:"Hot", queer:"Queer", feminist:"Not feminist", weird:"Quirky", kiss:2,
     notes:"Louis is quite the whiner."},
-  {key:"ddali", poster:"ddali.jpg", t:"Dracula: Dead and Loving It", y:1995, genre:["Comedy"], enj:-1, qual:-1, aes:1, rt:11, reviewed:"July 8, 2026",
+  {key:"ddali", poster:"ddali.jpg", t:"Dracula: Dead and Loving It", y:1995, genre:["Comedy"], enj:-1, qual:-1, aes:1, runtime:88, rt:11, reviewed:"July 8, 2026",
     monster:"Monster", scary:"Not Scary", sexy:"Average Human", queer:"Allosexual", feminist:"Not feminist", weird:"Strange and unusual", kiss:4,
     notes:"There were funny moments and tags I appreciated but many missed the mark and on the whole it was kinda eh."},
   {key:"buffy", poster:"buffy.jpg", t:"Buffy the Vampire Slayer", y:1992, genre:["Action","Comedy"], enj:3, qual:1, aes:0, rt:36, reviewed:"July 8, 2026",
     monster:"Monster", scary:"Not Scary", sexy:"Only a mother could love", queer:"Allosexual", feminist:"Feminist", weird:"Strange and unusual", kiss:2,
-    notes:"That was a lot of fun!"}
-  {key:"qotd", poster:"qotd.jpg", t:"Queen of the Damned", y:2022, genre:["Horror"], enj:2, qual:1, aes:1, rt:17, reviewed:"July 9, 2026",
-    monster:"Monster", scary:"Not Scary", sexy:"Supernaturally Hot", queer:"Allosexual", feminist:"Not Feminist", weird:"Strange and unusual", kiss:2,
-    notes:"This film was badly served by coming after Interview with the vampire staring a very different lestat and the dawn of irresistible but not yet mature special effects. Even so, it wouldn't have been great- but certainly enjoyable."}
+    notes:"That was a lot of fun!"},
+  {key:"qotd", poster:"qotd.jpg", t:"Queen of the Damned", y:2002, genre:["Horror"], enj:2, qual:1, aes:1, runtime:101, rt:17, reviewed:"July 9, 2026",
+    monster:"Monster", scary:"Not Scary", sexy:"Supernaturally Hot", queer:"Allosexual", feminist:"Not feminist", weird:"Strange and unusual", kiss:2,
+    notes:"This film was badly served by coming after Interview with the Vampire starring a very different Lestat and the dawn of irresistible but not yet mature special effects. Even so, it wouldn't have been great — but certainly enjoyable."}
 ];
 const byKey = {};
 films.forEach(f => byKey[f.key] = f);
+
+// ── Dynamic metrics ──────────────────────────────────────────────────────────
+const NUM_WORDS = ['Zero','One','Two','Three','Four','Five','Six','Seven','Eight',
+  'Nine','Ten','Eleven','Twelve','Thirteen','Fourteen','Fifteen','Sixteen',
+  'Seventeen','Eighteen','Nineteen','Twenty','Twenty-one','Twenty-two',
+  'Twenty-three','Twenty-four','Twenty-five','Twenty-six','Twenty-seven',
+  'Twenty-eight','Twenty-nine','Thirty','Thirty-one','Thirty-two','Thirty-three',
+  'Thirty-four','Thirty-five','Thirty-six','Thirty-seven','Thirty-eight',
+  'Thirty-nine','Forty','Forty-one','Forty-two','Forty-three','Forty-four',
+  'Forty-five','Forty-six','Forty-seven','Forty-eight','Forty-nine','Fifty'];
+
+(function updateMetrics(){
+  const count = films.length;
+  const totalMins = films.reduce((s,f) => s + (f.runtime||0), 0);
+  const hours = (totalMins/60).toFixed(1);
+  const genreCount = {}, genreFilmsMap = {};
+  films.forEach(f => f.genre.forEach(g => {
+    genreCount[g] = (genreCount[g]||0) + 1;
+    (genreFilmsMap[g] = genreFilmsMap[g]||[]).push(f);
+  }));
+
+  const set = (id, val) => { const el=document.getElementById(id); if(el) el.textContent=val; };
+  set('metric-minutes', totalMins.toLocaleString());
+  set('metric-minutes-sub', `about ${hours} hours, or ${count} films back to back`);
+  set('metric-directors', count);
+  set('metric-directors-sub', 'every film had a different director');
+  set('metric-horror', genreCount['Horror']||0);
+
+  const others = ['Action','Comedy','Drama','Romance']
+    .filter(g => genreCount[g])
+    .map(g => `${genreCount[g]} ${g.toLowerCase()}`).join(', ');
+  set('metric-genre-sub', `vs. ${others} (genres can overlap)`);
+
+  const word = NUM_WORDS[count] || String(count);
+  set('film-count-word', word);
+  set('genre-intro-count', word.toLowerCase());
+
+  // Genre table
+  const genreConfig = [
+    {genre:"Drama",   color:"#3a6b3a"},
+    {genre:"Romance", color:"#8563a8"},
+    {genre:"Horror",  color:"#8a1f24"},
+    {genre:"Comedy",  color:"#b3852e"},
+    {genre:"Action",  color:"#5a7090"},
+  ];
+  const tbody = document.getElementById('genre-tbody');
+  if(tbody){
+    tbody.innerHTML = '';
+    genreConfig.forEach(({genre,color}) => {
+      const gf = genreFilmsMap[genre]||[];
+      if(!gf.length) return;
+      const avg = arr => arr.reduce((s,f)=>s+f,0)/arr.length;
+      const fmt = v => { const r=Math.round(v*10)/10; return (r>=0?'+':'')+r; };
+      tbody.insertAdjacentHTML('beforeend',
+        `<tr>
+          <td><span class="swatch" style="background:${color};"></span>${genre}</td>
+          <td>${gf.length}</td>
+          <td>${fmt(avg(gf.map(f=>f.enj)))}</td>
+          <td>${fmt(avg(gf.map(f=>f.qual)))}</td>
+        </tr>
+        <tr><td colspan="4" class="genre-film-list">${gf.map(f=>f.t).join(', ')}</td></tr>`
+      );
+    });
+  }
+})();
+
 
 function genreClass(genre){
   const has = g => genre.includes(g);
@@ -667,7 +711,7 @@ const scaryOrder  = {"Not Scary":0,"Heebie-jeebies":1,"Anxiety":2,"Ahh! Real Mon
 const weirdOrder  = {"Normal":0,"Quirky":1,"Strange and unusual":2,"Strange and Unusual":2,"Absolutely Wild":3};
 const queerOrder  = {"Homophobic":0,"Allosexual":1,"Sort of, Maybe":2,"Queer":3};
 const femOrder    = {"Misogynist":0,"Not feminist":1,"Sort of, Maybe":2,"Feminist":3};
-const sexyOrder   = {"Only a mother could love":0,"Average Human":1,"Grotesque":1,"Hot":2};
+const sexyOrder   = {"Only a mother could love":0,"Average Human":1,"Grotesque":1,"Hot":2,"Supernaturally Hot":2};
 const monsterOrder= {"Monster":0,"Metaphor":1};
 
 function dimScore(f, dim){
