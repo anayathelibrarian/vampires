@@ -154,6 +154,11 @@
   .rec-why{font-size:0.72rem; color:var(--text-dim); line-height:1.4;}
   .rec-why strong{color:var(--garlic); font-weight:600; display:block; margin-bottom:2px;}
 
+  .email-btn{display:inline-block; padding:12px 22px; background:var(--bg-panel); border:1px solid var(--rule-bright); color:var(--garlic); font-family:'Source Sans 3',sans-serif; font-size:0.88rem; text-decoration:none; transition:background 0.15s, border-color 0.15s;}
+  .email-btn:hover{background:rgba(216,192,138,0.1); border-color:var(--garlic);}
+  .email-btn-secondary{color:var(--text-dim); border-color:var(--rule);}
+  .email-btn-secondary:hover{color:var(--garlic); background:rgba(216,192,138,0.07); border-color:var(--rule-bright);}
+
   footer{margin-top:80px; padding-top:24px; border-top:1px solid var(--rule); color:var(--text-dim); font-size:0.8rem;}
 
   @media (max-width: 720px){
@@ -167,27 +172,27 @@
 
   <header class="hero">
     <h1>Anaya's Vampire Movie Ranking</h1>
-    <p class="subtitle"><span id="film-count-word">Twenty-five</span> films, one shared bloodline of monsters and metaphors &mdash; rated on enjoyment, quality, fright, and a few questions Letterboxd never asks. Hover any title or card for the full verdict.</p>
+    <p class="subtitle"><span id="film-count-word">Twenty-five</span> films, one shared bloodline of monsters and metaphors &mdash; rated on enjoyment, quality, fright, and more. Hover any title or card for the full verdict.</p>
     <div class="metrics">
+      <div class="metric">
+        <div class="num" id="metric-count">—</div>
+        <div class="label">Films watched</div>
+        <div class="sub" id="metric-count-sub">&nbsp;</div>
+      </div>
       <div class="metric">
         <div class="num" id="metric-minutes">—</div>
         <div class="label">Minutes watched</div>
-        <div class="sub" id="metric-minutes-sub">about 42.7 hours, or 25 films back to back</div>
+        <div class="sub" id="metric-minutes-sub">&nbsp;</div>
       </div>
       <div class="metric">
-        <div class="num">Wesley Snipes</div>
-        <div class="label">Most-seen actor</div>
-        <div class="sub">in 3 films &mdash; the entire Blade trilogy</div>
-      </div>
-      <div class="metric">
-        <div class="num" id="metric-directors">25</div>
+        <div class="num" id="metric-directors">—</div>
         <div class="label">Directors</div>
-        <div class="sub" id="metric-directors-sub">every film had a different director</div>
+        <div class="sub" id="metric-directors-sub">&nbsp;</div>
       </div>
       <div class="metric">
-        <div class="num" id="metric-horror">13</div>
-        <div class="label">Horror-tagged films</div>
-        <div class="sub" id="metric-genre-sub">vs. 7 action, 7 comedy, 4 drama, 2 romance (genres can overlap)</div>
+        <div class="num" id="metric-monster">—</div>
+        <div class="label">Monster vs. Metaphor</div>
+        <div class="sub" id="metric-monster-sub">&nbsp;</div>
       </div>
     </div>
   </header>
@@ -209,7 +214,7 @@
 
   <section class="section">
     <h2>Genre breakdown</h2>
-    <div class="section-intro">Some films wear two genres at once, so these counts add up to more than <span id="genre-intro-count">twenty-five</span>. Drama still leads on quality; Action and Comedy are now neck and neck on film count, with very different results.</div>
+    <div class="section-intro">Some films wear two genres at once, so the counts here add up to more than the total number of films. Hover a bar for the full list. Averages are Anaya's enjoyment and quality scores.</div>
     <div class="genre-flex">
       <div class="genre-chart-box">
         <div style="position:relative; width:100%; height:280px;">
@@ -225,7 +230,7 @@
 
   <section class="section">
     <h2>Enjoyment vs. quality</h2>
-    <div class="section-intro">Right means more fun, up means better made. Guilty pleasures are good times built badly; slogs are well made but joyless; hard passes earn neither label.</div>
+    <div class="section-intro">Right means more fun, up means better made. Hover any dot for the title and scores.</div>
     <div class="chart-panel">
       <div class="quad-labels">
         <span class="tl">Respectable, but a slog</span>
@@ -241,7 +246,7 @@
 
   <section class="section">
     <h2>Scariness vs. aesthetic</h2>
-    <div class="section-intro">From a faint heebie-jeebie to full ahh! real monsters territory, plotted against vibe quality.</div>
+    <div class="section-intro">Each film plotted by how scary it is against how well it commits to its aesthetic. Hover any dot for the title.</div>
     <div class="chart-panel">
       <div style="position:relative; width:100%; height:460px;">
         <canvas id="scaryAesChart" role="img" aria-label="Scatter chart of scariness versus aesthetic rating for all 11 vampire movies">Nosferatu 2024 is the only film rated anxiety on the scary scale and also has the top aesthetic score. Most other films cluster around not scary to heebie-jeebies.</canvas>
@@ -317,6 +322,11 @@
     </div>
   </section>
 
+  <div style="margin-top:48px; display:flex; gap:16px; flex-wrap:wrap;">
+    <a href="mailto:jones.anaya@gmail.com?subject=You%20should%20watch%20this%20vampire%20film" class="email-btn">📽 Recommend a film</a>
+    <a href="mailto:jones.anaya@gmail.com?subject=I%20want%20to%20argue%20or%20compliment%20the%20very%20biased%20information%20here" class="email-btn email-btn-secondary">🧛 Argue or compliment</a>
+  </div>
+
   <footer>
   <p>Enjoyment, quality, and aesthetic scores range from &minus;5 to +5.</p>
   <p style="margin-top:10px; color:var(--text-dim); font-size:0.78rem;">This presentation was built with the help of Claude (Anthropic). Data was collected via Google Forms and processed by Claude, which also generated the HTML, CSS, JavaScript, data visualizations, and layout from scratch based on Anaya's ratings and written notes — with ongoing iteration across many conversations.</p>
@@ -342,16 +352,16 @@ const films = [
   {key:"bladetrinity", poster:"bladetrinity.jpg", t:"Blade: Trinity", y:2004, genre:["Action"], enj:1, qual:-3, aes:0, runtime:113, rt:24, reviewed:"April 27, 2026",
     monster:"Monster", scary:"Heebie-jeebies", sexy:"Average Human", queer:"Homophobic", feminist:"Not feminist", weird:"Normal", kiss:4,
     notes:"Parker Posey makes this movie. Ryan Reynolds' abs should get their own credit line."},
-  {key:"nosferatu1922", poster:"nosferatu1922.jpg", t:"Nosferatu (1922)", y:1922, genre:["Horror"], enj:-2, qual:2, aes:2, runtime:94, rt:97, reviewed:"April 28, 2026",
+  {key:"nosferatu1922", poster:"nosferatu1922.jpg", t:"Nosferatu", y:1922, genre:["Horror"], enj:-2, qual:2, aes:2, runtime:94, rt:97, reviewed:"April 28, 2026",
     monster:"Metaphor", scary:"Heebie-jeebies", sexy:"Grotesque", queer:"Homophobic", feminist:"Not feminist", weird:"Quirky", kiss:2,
     notes:"Curious history related to the clear Dracula knock-offs and what they chose to update for a German audience."},
-  {key:"frightnight2011", poster:"frightnight2011.jpg", t:"Fright Night (2011)", y:2011, genre:["Horror"], enj:1, qual:-1, aes:-3, runtime:106, rt:72, reviewed:"May 4, 2026",
+  {key:"frightnight2011", poster:"frightnight2011.jpg", t:"Fright Night", y:2011, genre:["Horror"], enj:1, qual:-1, aes:-3, runtime:106, rt:72, reviewed:"May 4, 2026",
     monster:"Monster", scary:"Heebie-jeebies", sexy:"Grotesque", queer:"Homophobic", feminist:"Misogynist", weird:"Normal", kiss:2,
     notes:"Why is the vampire part shark? Bonus points for staking with a Century 21 lawn sign."},
   {key:"bramstoker", poster:"bramstoker.jpg", t:"Bram Stoker's Dracula", y:1992, genre:["Horror"], enj:3, qual:3, aes:3, runtime:128, rt:72, reviewed:"May 4, 2026",
     monster:"Monster", scary:"Not Scary", sexy:"Only a mother could love", queer:"Sort of, Maybe", feminist:"Misogynist", weird:"Normal", kiss:2,
     notes:"The novel had the vamps be about the fear of invaders... but we thankfully lose the racist aspect of that here, and play up the love story instead."},
-  {key:"nosferatu2024", poster:"nosferatu2024.jpg", t:"Nosferatu (2024)", y:2024, genre:["Horror"], enj:4, qual:4, aes:5, runtime:132, rt:87, reviewed:"May 6, 2026",
+  {key:"nosferatu2024", poster:"nosferatu2024.jpg", t:"Nosferatu", y:2024, genre:["Horror"], enj:4, qual:4, aes:5, runtime:132, rt:87, reviewed:"May 6, 2026",
     monster:"Monster", scary:"Anxiety", sexy:"Grotesque", queer:"Queer", feminist:"Not feminist", weird:"Strange and unusual", kiss:1,
     notes:"So gross! So good!"},
   {key:"frightnight1985", poster:"frightnight1985.jpg", t:"Fright Night (1985)", y:1985, genre:["Horror"], enj:-2, qual:-3, aes:-4, runtime:107, rt:79, reviewed:"May 14, 2026",
@@ -375,10 +385,10 @@ const films = [
   {key:"humanist", poster:"hvscsp.jpg", t:"Humanist Vampire Seeking Consenting Suicidal Person", y:2023, genre:["Comedy","Drama"], enj:3, qual:4, aes:2, runtime:92, rt:90, reviewed:"July 1, 2026",
     monster:"Monster", scary:"Heebie-jeebies", sexy:"Average Human", queer:"Allosexual", feminist:"Sort of, Maybe", weird:"Quirky", kiss:4,
     notes:"The scariest part of this movie is the vampire dentist. Kidding! It's the idea of vampires still having problems parenting."},
-  {key:"girlwalks", poster:"agwhaan.jpg", t:"A Girl Walks Home Alone at Night", y:2014, genre:["Drama","Horror"], enj:3, qual:4, aes:4, rt:99, reviewed:"July 1, 2026",
+  {key:"girlwalks", poster:"agwhaan.jpg", t:"A Girl Walks Home Alone at Night", y:2014, genre:["Drama","Horror"], enj:3, qual:4, aes:4, runtime:101, rt:99, reviewed:"July 1, 2026",
     monster:"Metaphor", scary:"Heebie-jeebies", sexy:"Hot", queer:"Allosexual", feminist:"Feminist", weird:"Strange and unusual", kiss:5,
     notes:"I think humans are the monster."},
-  {key:"shadowvampire", poster:"sotv.jpg", t:"Shadow of the Vampire", y:2000, genre:["Drama","Horror"], enj:2, qual:3, aes:3, rt:82, reviewed:"July 2, 2026",
+  {key:"shadowvampire", poster:"sotv.jpg", t:"Shadow of the Vampire", y:2000, genre:["Drama","Horror"], enj:2, qual:3, aes:3, runtime:92, rt:82, reviewed:"July 2, 2026",
     monster:"Monster", scary:"Anxiety", sexy:"Grotesque", queer:"Sort of, Maybe", feminist:"Misogynist", weird:"Quirky", kiss:1,
     notes:"Based on a rumor about the filming of Nosferatu, Dafoe and Malkovich are both phenomenal but I have limited patience for films about men behaving badly."},
   {key:"markoflilith", poster:"markoflilith.jpg", t:"Mark of Lilith", y:1986, genre:["Horror"], enj:1, qual:1, aes:0, runtime:32, rt:null, reviewed:"July 5, 2026",
@@ -390,16 +400,16 @@ const films = [
   {key:"jcvh", poster:"JCVH.jpg", t:"Jesus Christ Vampire Hunter", y:2001, genre:["Action","Comedy"], enj:4, qual:-3, aes:-3, runtime:85, rt:null, reviewed:"July 6, 2026",
     monster:"Monster", scary:"Not Scary", sexy:"Hot", queer:"Queer", feminist:"Misogynist", weird:"Absolutely Wild", kiss:5,
     notes:"My complaints: Mary Magnum finds and highlights a suspicious salt and pepper shaker set, and there's a bad but not funny bad musical number. Otherwise this movie is perfectly terrible and also amazing."},
-  {key:"hunger", poster:"thehunger.jpg", t:"The Hunger", y:1983, genre:["Horror"], enj:3, qual:0, aes:5, rt:62, reviewed:"July 6, 2026",
+  {key:"hunger", poster:"thehunger.jpg", t:"The Hunger", y:1983, genre:["Horror"], enj:3, qual:0, aes:5, runtime:97, rt:62, reviewed:"July 6, 2026",
     monster:"Metaphor", scary:"Ahh! Real Monsters", sexy:"Hot", queer:"Queer", feminist:"Feminist", weird:"Strange and unusual", kiss:5,
     notes:"This movie is a lot. David Bowie spends a lot of time in old man make-up, and I think vampires as an allegory for addiction doesn't totally work — but locking your immortal but aged lovers in the attic is cold."},
-  {key:"interviewvampire", poster:"", t:"Interview with the Vampire", y:1994, genre:["Horror"], enj:2, qual:3, aes:4, runtime:122, rt:66, reviewed:"July 7, 2026",
+  {key:"interviewvampire", poster:"iwtv.jpg", t:"Interview with the Vampire", y:1994, genre:["Horror"], enj:2, qual:3, aes:4, runtime:122, rt:66, reviewed:"July 7, 2026",
     monster:"Metaphor", scary:"Heebie-jeebies", sexy:"Hot", queer:"Queer", feminist:"Not feminist", weird:"Quirky", kiss:2,
     notes:"Louis is quite the whiner."},
   {key:"ddali", poster:"ddali.jpg", t:"Dracula: Dead and Loving It", y:1995, genre:["Comedy"], enj:-1, qual:-1, aes:1, runtime:88, rt:11, reviewed:"July 8, 2026",
     monster:"Monster", scary:"Not Scary", sexy:"Average Human", queer:"Allosexual", feminist:"Not feminist", weird:"Strange and unusual", kiss:4,
     notes:"There were funny moments and tags I appreciated but many missed the mark and on the whole it was kinda eh."},
-  {key:"buffy", poster:"buffy.jpg", t:"Buffy the Vampire Slayer", y:1992, genre:["Action","Comedy"], enj:3, qual:1, aes:0, rt:36, reviewed:"July 8, 2026",
+  {key:"buffy", poster:"buffy.jpg", t:"Buffy the Vampire Slayer", y:1992, genre:["Action","Comedy"], enj:3, qual:1, aes:0, runtime:86, rt:36, reviewed:"July 8, 2026",
     monster:"Monster", scary:"Not Scary", sexy:"Only a mother could love", queer:"Allosexual", feminist:"Feminist", weird:"Strange and unusual", kiss:2,
     notes:"That was a lot of fun!"},
   {key:"qotd", poster:"qotd.jpg", t:"Queen of the Damned", y:2002, genre:["Horror"], enj:2, qual:1, aes:1, runtime:101, rt:17, reviewed:"July 9, 2026",
@@ -429,21 +439,21 @@ const NUM_WORDS = ['Zero','One','Two','Three','Four','Five','Six','Seven','Eight
     (genreFilmsMap[g] = genreFilmsMap[g]||[]).push(f);
   }));
 
+  const monsters = films.filter(f=>f.monster==="Monster").length;
+  const metaphors = films.filter(f=>f.monster==="Metaphor").length;
+
   const set = (id, val) => { const el=document.getElementById(id); if(el) el.textContent=val; };
+  set('metric-count', count);
+  set('metric-count-sub', NUM_WORDS[count] ? NUM_WORDS[count] + ' films and counting' : count + ' films');
   set('metric-minutes', totalMins.toLocaleString());
   set('metric-minutes-sub', `about ${hours} hours, or ${count} films back to back`);
   set('metric-directors', count);
   set('metric-directors-sub', 'every film had a different director');
-  set('metric-horror', genreCount['Horror']||0);
-
-  const others = ['Action','Comedy','Drama','Romance']
-    .filter(g => genreCount[g])
-    .map(g => `${genreCount[g]} ${g.toLowerCase()}`).join(', ');
-  set('metric-genre-sub', `vs. ${others} (genres can overlap)`);
+  set('metric-monster', `${monsters} : ${metaphors}`);
+  set('metric-monster-sub', `${monsters} monsters, ${metaphors} metaphors`);
 
   const word = NUM_WORDS[count] || String(count);
   set('film-count-word', word);
-  set('genre-intro-count', word.toLowerCase());
 
   // Genre table
   const genreConfig = [
@@ -524,13 +534,20 @@ function cardHTML(key, opts){
   </div>`;
 }
 
-document.getElementById("enjoy-best").innerHTML =
-  cardHTML("sinners", {metaLabel:"Enjoyment", metaScore:5}) +
-  cardHTML("nosferatu2024", {metaLabel:"Enjoyment", metaScore:4}) +
-  cardHTML("onlylovers", {metaLabel:"Enjoyment", metaScore:4});
-document.getElementById("enjoy-worst").innerHTML =
-  cardHTML("renfield", {metaLabel:"Enjoyment", metaScore:-4}) +
-  cardHTML("abelincoln", {metaLabel:"Enjoyment", metaScore:-3});
+// Dynamic top/bottom enjoyed — sorted by enj desc, tiebreak qual desc then aes desc
+(function renderVerdicts(){
+  const sorted = [...films].sort((a,b) =>
+    b.enj - a.enj || b.qual - a.qual || b.aes - a.aes
+  );
+  const best = sorted.slice(0, 3);
+  const worst = [...films].sort((a,b) =>
+    a.enj - b.enj || a.qual - b.qual || a.aes - b.aes
+  ).slice(0, 2);
+  document.getElementById("enjoy-best").innerHTML =
+    best.map(f => cardHTML(f.key, {metaLabel:"Enjoyment", metaScore:f.enj})).join("");
+  document.getElementById("enjoy-worst").innerHTML =
+    worst.map(f => cardHTML(f.key, {metaLabel:"Enjoyment", metaScore:f.enj})).join("");
+})();
 
 function ringHTML(tone, label, keys){
   return `<div class="ring ${tone}"><span class="ring-label">${label} (${keys.length})</span>${keys.map(k => cardHTML(k, {mini:true})).join("")}</div>`;
@@ -706,6 +723,27 @@ sortedByYear.forEach((f) => {
   cardWrap.innerHTML = `<div class="ttitle">${f.t}</div><div class="tooltip-content">${tooltipHTML(f)}</div>`;
   tlContainer.appendChild(cardWrap);
 });
+
+// ── Dynamic aria-labels ──────────────────────────────────────────────────────
+(function updateAriaLabels(){
+  const count = films.length;
+  const scaryCount = films.filter(f=>f.scary && scaryMap[f.scary]!==undefined).length;
+  const genreCount = {};
+  films.forEach(f=>f.genre.forEach(g=>genreCount[g]=(genreCount[g]||0)+1));
+  const genreDesc = Object.entries(genreCount)
+    .sort((a,b)=>b[1]-a[1])
+    .map(([g,n])=>`${n} ${g.toLowerCase()}`).join(', ');
+  const quad = document.getElementById('quadChart');
+  if(quad) quad.setAttribute('aria-label',
+    `Scatter chart of enjoyment versus quality for ${count} vampire films, divided into four labeled quadrants: genuinely great (high enjoyment, high quality), guilty pleasure (high enjoyment, low quality), respectable but a slog (low enjoyment, high quality), and hard pass (low on both).`);
+  const scary = document.getElementById('scaryAesChart');
+  if(scary) scary.setAttribute('aria-label',
+    `Scatter chart of scariness versus aesthetic rating for ${scaryCount} vampire films rated on the scary scale.`);
+  const genre = document.getElementById('genreChart');
+  if(genre) genre.setAttribute('aria-label',
+    `Bar chart of film counts by genre tag. ${genreDesc}.`);
+})();
+
 // ── Recommender ────────────────────────────────────────────────────────────
 const scaryOrder  = {"Not Scary":0,"Heebie-jeebies":1,"Anxiety":2,"Ahh! Real Monsters":3,"Aaahh!!! Real Monsters":3};
 const weirdOrder  = {"Normal":0,"Quirky":1,"Strange and unusual":2,"Strange and Unusual":2,"Absolutely Wild":3};
