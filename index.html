@@ -471,7 +471,7 @@ const NUM_WORDS = ['Zero','One','Two','Three','Four','Five','Six','Seven','Eight
 
   const set = (id, val) => { const el=document.getElementById(id); if(el) el.textContent=val; };
   set('metric-count', count);
-  set('metric-count-sub', NUM_WORDS[count] ? NUM_WORDS[count] + ' You have a lot of time on your hands, huh? - my dad' : count + ' films');
+  set('metric-count-sub', NUM_WORDS[count] ? NUM_WORDS[count] + '? You have a lot of time on your hands, huh? - my dad' : count + ' films');
   set('metric-minutes', totalMins.toLocaleString());
   set('metric-minutes-sub', `about ${hours} hours`);
   set('metric-directors', count);
